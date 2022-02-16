@@ -18,6 +18,13 @@ export class PropertyService {
       map(response => response._embedded.properties)
     )
   }
+
+  getProperty(thePopertyId: number): Observable<Property> {
+    // URL építés a property id alapján
+    const propertyUrl = `${this.baseUrl}/${thePopertyId}`;
+
+    return this.httpClient.get<Property>(propertyUrl);
+  }
 }
 
 interface GetResponse {
