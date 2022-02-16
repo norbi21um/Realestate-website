@@ -25,6 +25,6 @@ public class User {
     private String phoneNumber;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private Set<Proterty> proterties;
+    private Set<Property> proterties;
 
 }

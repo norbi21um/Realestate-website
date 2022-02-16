@@ -10,7 +10,7 @@ import java.util.Date;
 @Entity
 @Table(name = "property")
 @Data
-public class Proterty {
+public class Property {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,9 +28,6 @@ public class Proterty {
 
     @Column(name = "description")
     private String description;
-
-    @Column(name = "phone_number")
-    private String phoneNumber;
 
     @Column(name = "date_created")
     @CreationTimestamp
