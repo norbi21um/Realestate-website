@@ -1,3 +1,23 @@
-<p *ngFor="let temp of properties">
-    {{temp.area}}: {{temp.price | currency:"HUF":"Ft"}}
-</p>
+<table class="table">
+    <thead class="table-dark">
+        <tr>
+            <th>Image</th>
+            <th>Price</th>
+            <th>Area</th>
+            <th>Description</th>
+            <th>More details</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let tempProperty of properties">
+            <td>
+                <img src="../assets/images/properties/{{tempProperty.imageUrl}}" height="50"/>
+            </td>
+            <td>{{tempProperty.price}}</td>
+            <td>{{tempProperty.area}}</td>
+            <td>{{tempProperty.description}}</td>
+            <td><button>More details</button></td>
+        </tr>
+    </tbody>
+</table>
+

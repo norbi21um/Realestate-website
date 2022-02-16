@@ -5,5 +5,4 @@ export class Property {
     imageUrl: string;
     description: string;
     dateCreated: Date;
-
 }
