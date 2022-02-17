@@ -1,7 +1,69 @@
-<img src="../assets/images/properties/{{property.imageUrl}}" style="width: 30%;"/>
+<!-- Page Content -->
+<div class="container">
 
-{{property.price}}
-{{property.area}}
-{{property.description}}
+    <!-- Portfolio Item Heading -->
+    <h1 class="my-4">Itt lesz az address</h1>
+  
+    <!-- Portfolio Item Row -->
+    <div class="row">
+  
+      <div class="col-md-8">
+        <img class="img-fluid" src="../assets/images/properties/{{property.imageUrl}}" alt="">
+      </div>
+  
+      <div class="col-md-4">
+        <h3 class="my-3">Property Description</h3>
+        {{property.description}}
+        <h3 class="my-3">Property Details</h3>
+        <ul>
+          <li>Lorem Ipsum</li>
+          <li>Dolor Sit Amet</li>
+          <li>Consectetur</li>
+          <li>Adipiscing Elit</li>
+        </ul>
+        <h3 class="my-3">Get in touch with the seller:</h3>
+        <p>Kovács János:</p>
+        <p>+36 30 823 9943</p>
+      </div>
+  
+    </div>
+    <!-- /.row -->
 
-<a routerLink="/properties">Back to the properties</a>
+    <div class="50% py-3">
+        <a routerLink="/properties" class="btn btn-outline-dark mt-auto">Back to the properties</a>
+    </div>
+  
+    <!-- Related Projects Row -->
+    <h3 class="my-4">Related Projects</h3>
+  
+    <div class="row">
+  
+      <div class="col-md-3 col-sm-6 mb-4">
+        <a href="#">
+              <img class="img-fluid" src="https://via.placeholder.com/500x300" alt="">
+            </a>
+      </div>
+  
+      <div class="col-md-3 col-sm-6 mb-4">
+        <a href="#">
+              <img class="img-fluid" src="https://via.placeholder.com/500x300" alt="">
+            </a>
+      </div>
+  
+      <div class="col-md-3 col-sm-6 mb-4">
+        <a href="#">
+              <img class="img-fluid" src="https://via.placeholder.com/500x300" alt="">
+            </a>
+      </div>
+  
+      <div class="col-md-3 col-sm-6 mb-4">
+        <a href="#">
+              <img class="img-fluid" src="https://via.placeholder.com/500x300" alt="">
+            </a>
+      </div>
+  
+    </div>
+    <!-- /.row -->
+  
+  </div>
+  <!-- /.container -->
