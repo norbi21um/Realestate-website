@@ -2,7 +2,8 @@
 <div class="container">
 
     <!-- Portfolio Item Heading -->
-    <h1 class="my-4">Itt lesz az address</h1>
+    <h3 class="my-4">{{property.address}}</h3>
+    <p class="font-italic font-weight-light ">created on - {{property.dateCreated| date : 'yyyy-MM-dd'}} </p>
   
     <!-- Portfolio Item Row -->
     <div class="row">
@@ -22,7 +23,7 @@
           <li>Adipiscing Elit</li>
         </ul>
         <h3 class="my-3">Get in touch with the seller:</h3>
-        <p>{{property.user.userName}}</p>
+        <p>{{property.user.firstName}} {{property.user.lastName}}</p>
         <p>{{property.user.phoneNumber}}</p>
       </div>
   

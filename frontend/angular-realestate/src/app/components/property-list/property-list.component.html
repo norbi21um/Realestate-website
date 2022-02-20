@@ -22,13 +22,15 @@
                     <!-- Property details-->
                     <div class="card-body p-4">
                         <div class="text-center">
-                            <!-- Property price-->
+                            <!-- Property price -->
                             <h5 class="fw-bolder">{{tempProperty.price | currency: 'USD'}}</h5>
-                            <!-- Product area-->
+                            <!-- Property Address -->
+                            <p class="font-weight-light">{{tempProperty.address}}</p>
+                            <!-- Property area-->
                             {{tempProperty.area}}	&#x33A1;
                         </div>
                     </div>
-                    <!-- Product actions-->
+                    <!-- Property actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                         <div class="text-center"><a routerLink="/properties/{{tempProperty.id}}" class="btn btn-outline-dark mt-auto">View details</a></div>
                     </div>
