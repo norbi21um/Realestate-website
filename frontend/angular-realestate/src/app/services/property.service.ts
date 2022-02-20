@@ -9,13 +9,13 @@ import { map } from 'rxjs/operators'
 })
 export class PropertyService {
 
-  private baseUrl = 'http://localhost:8080/api/properties'
+  private baseUrl = 'http://localhost:8080/properties'
 
   constructor(private httpClient: HttpClient) { }
 
   getPropertyList():Observable<Property[]>{
     return this.httpClient.get<GetResponse>(this.baseUrl).pipe(
-      map(response => response._embedded.properties)
+      map(response => response.properties)
     )
   }
 
@@ -28,7 +28,7 @@ export class PropertyService {
 }
 
 interface GetResponse {
-  _embedded: {
+  
     properties: Property[];
-  }
+  
 }

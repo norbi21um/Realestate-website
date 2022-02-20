@@ -1,3 +1,5 @@
+import { User } from "./user";
+
 export class Property {
 
     id:number;
@@ -6,4 +8,5 @@ export class Property {
     imageUrl: string;
     description: string;
     dateCreated: Date;
+    user:User;
 }

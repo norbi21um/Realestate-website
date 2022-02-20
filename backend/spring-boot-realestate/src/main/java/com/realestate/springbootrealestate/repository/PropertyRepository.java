@@ -1,10 +1,11 @@
-package com.realestate.springbootrealestate.dao;
+package com.realestate.springbootrealestate.repository;
 
 import com.realestate.springbootrealestate.model.Property;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.stereotype.Repository;
 
-@CrossOrigin("http://localhost:4200")
+@Repository
 public interface PropertyRepository extends JpaRepository<Property, Long> {
+
 
 }

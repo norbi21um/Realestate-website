@@ -1,6 +1,6 @@
 package com.realestate.springbootrealestate.model;
 
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -17,6 +17,9 @@ public class Property {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "address")
+    private String address;
+
     @Column(name = "price")
     private BigDecimal price;
 
@@ -26,6 +29,7 @@ public class Property {
     @Column(name = "image_url")
     private String imageUrl;
 
+    @Lob
     @Column(name = "description")
     private String description;
 
