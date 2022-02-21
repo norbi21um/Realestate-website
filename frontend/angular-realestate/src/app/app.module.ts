@@ -8,8 +8,11 @@ import { HttpClientModule } from '@angular/common/http'
 import { PropertyService } from './services/property.service';
 import { Routes, RouterModule } from '@angular/router';
 import { PropertyDetailsComponent } from './components/property-details/property-details.component';
+import { AddPropertyComponent } from './components/add-property/add-property.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
+  {path: 'addnew', component: AddPropertyComponent},
   {path: 'properties/:id', component: PropertyDetailsComponent},
   {path: 'properties', component: PropertyListComponent},
   {path: '', redirectTo: '/properties', pathMatch: 'full'},
@@ -20,13 +23,15 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     PropertyListComponent,
-    PropertyDetailsComponent
+    PropertyDetailsComponent,
+    AddPropertyComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
     BrowserModule,
     NgbModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [PropertyService],
   bootstrap: [AppComponent]

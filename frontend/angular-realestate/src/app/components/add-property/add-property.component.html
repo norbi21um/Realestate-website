@@ -1,0 +1,44 @@
+
+<div class="container px-4 px-lg-5">
+
+    <form [formGroup]="addNewFormGroup" (ngSubmit)="onSubmit()">
+
+        <div formGroupName="property" class="form-area">
+            <h2 class="pt-5">Add new property</h2>
+
+            <div class="form-group pt-5">
+                <label for="addressInput">Email address</label>
+                <input formControlName="address" type="text" class="form-control" id="addressInput" aria-describedby="addressHelp" placeholder="Enter address">
+                <small id="addressHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+
+            <div class="form-group pt-3">
+                <label for="priceInput">Price</label>
+                <input formControlName="price" type="number" class="form-control" id="priceInput"  placeholder="Enter price">
+            </div>
+
+            <div class="form-group pt-3">
+                <label for="areaInput">Area</label>
+                <input formControlName="area" type="number" class="form-control" id="areaInput"  placeholder="Enter area">
+            </div>
+
+            <div class="form-group pt-3">
+                <label for="descriptionArea">Description</label>
+                <textarea formControlName="description" class="form-control" id="descriptionArea" rows="3"></textarea>
+            </div>
+
+            <div class="form-group pt-3">
+                <label for="imageInput">Image Url</label>
+                <input formControlName="imageUrl" type="text" class="form-control" id="imageInput" aria-describedby="imageHelp" placeholder="Enter image url">
+                <small id="imageHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+
+        </div>
+
+        <!-- submit button-->
+        <div class="text-center pt-3 pb-5">
+           <a routerLink="/properties"><button  type="submit" class="btn btn-primary btn-lg">Create</button></a>
+        </div>
+
+    </form>
+</div>
