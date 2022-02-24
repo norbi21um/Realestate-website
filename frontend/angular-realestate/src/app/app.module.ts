@@ -10,8 +10,11 @@ import { Routes, RouterModule } from '@angular/router';
 import { PropertyDetailsComponent } from './components/property-details/property-details.component';
 import { AddPropertyComponent } from './components/add-property/add-property.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './components/login/login.component';
+import { SignupComponent } from './components/signup/signup.component';
 
 const routes: Routes = [
+  {path: 'signin', component: LoginComponent},
   {path: 'addnew', component: AddPropertyComponent},
   {path: 'properties/:id', component: PropertyDetailsComponent},
   {path: 'properties', component: PropertyListComponent},
@@ -24,7 +27,9 @@ const routes: Routes = [
     AppComponent,
     PropertyListComponent,
     PropertyDetailsComponent,
-    AddPropertyComponent
+    AddPropertyComponent,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

@@ -24,12 +24,6 @@ public class PropertyController {
         return propertyService.getPropertyById(id);
     }
 
-    /**
-     @RequestMapping("")
-     public List<Property> getAllProperties(){
-     return propertyService.getAllProperties();
-     }**/
-
     @RequestMapping("")
     public Map<String, List<Property>> getAllProperties() {
         Map<String, List<Property>> response = new HashMap<String, List<Property>>();
