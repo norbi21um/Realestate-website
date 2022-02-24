@@ -15,17 +15,6 @@ export class AddPropertyComponent implements OnInit {
 
   addNewFormGroup: FormGroup;
 
-  propertyItem:PropertyItem = {
-    address: 'AAAAAAA',
-    price: 0,
-    area: 0,
-    imageUrl: 'AAAAA',
-    description: 'AAAAAAAA',
-    userId: 1
-  };
-
-  url = `http://localhost:8080/properties/createProperty`;
-
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
@@ -47,7 +36,7 @@ export class AddPropertyComponent implements OnInit {
         description:  new FormControl('', 
                               [Validators.required]),
         imageUrl:  new FormControl('', 
-                               [Validators.required])
+                               [])
       })
     });
 
@@ -69,33 +58,48 @@ export class AddPropertyComponent implements OnInit {
     return this.addNewFormGroup.get('property.description');
   }
 
+  //Image-nek nincs getterje, mert nem kell validálni.
+  //Ha nem töltik ki, akkor a default.jpg kép fog oda kerülni
+
   onSubmit(){
-    //todo
+    if (this.addNewFormGroup.invalid) {
+      this.addNewFormGroup.markAllAsTouched();
+      return;
+    }
 
-    let test:PropertyItem = new PropertyItem;
+    let propertyItem:PropertyItem = new PropertyItem;
     
-    test.address = this.addNewFormGroup.get('property.address').value;
-    test.price = this.addNewFormGroup.get('property.price').value;
-    test.area = this.addNewFormGroup.get('property.area').value;
-    test.description = this.addNewFormGroup.get('property.description').value;
-    test.imageUrl = this.addNewFormGroup.get('property.imageUrl').value;
-    test.userId = 1;
+    propertyItem.address = this.addNewFormGroup.get('property.address').value;
+    propertyItem.price = this.addNewFormGroup.get('property.price').value;
+    propertyItem.area = this.addNewFormGroup.get('property.area').value;
+    propertyItem.description = this.addNewFormGroup.get('property.description').value;
+
+    //Alapértéket ad a kének ha nem adnak kép URL-t
+    if(this.addNewFormGroup.get('property.imageUrl').value == ""){
+      propertyItem.imageUrl = "default.jpg";
+    } else{
+      propertyItem.imageUrl = this.addNewFormGroup.get('property.imageUrl').value;
+    }
+    propertyItem.userId = 1;
 
     
-    this.addPropertyService.createProperty(test).subscribe({
+    this.addPropertyService.createProperty(propertyItem).subscribe({
       next: response => {
         alert(`New property was created`);
-
+        this.resetFields();
       },
       error: err => {
         alert(`There was an error: ${err.message}`);
       }
     });
-    /*
-    this.http.post<PropertyItem>(this.url,test).subscribe(
-      data => {
-    })*/
 
+  }
+
+  resetFields() {
+    
+    this.addNewFormGroup.reset();
+
+    this.router.navigateByUrl("/properties");
   }
 
 }

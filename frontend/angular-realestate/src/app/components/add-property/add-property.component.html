@@ -7,30 +7,57 @@
             <h2 class="pt-5">Add new property</h2>
 
             <div class="form-group pt-5">
-                <label for="addressInput">Email address</label>
-                <input formControlName="address" type="text" class="form-control" id="addressInput" aria-describedby="addressHelp" placeholder="Enter address">
-                <small id="addressHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                <label for="addressInput">Address</label>
+                <input formControlName="address" type="text" class="form-control" id="addressInput" placeholder="Enter address">
+                <!--Validátorok-->
+                <div *ngIf="address.invalid && (address.dirty || address.touched)" class="alert alert-danger mt-1">
+                    <div *ngIf="address.errors?.['required']">
+                        Address is required
+                    </div>
+
+                    <div *ngIf="address.errors?.['minlength']">
+                        Address must be at least 2 characters long
+                    </div>
+                </div>
             </div>
 
             <div class="form-group pt-3">
                 <label for="priceInput">Price</label>
                 <input formControlName="price" type="number" class="form-control" id="priceInput"  placeholder="Enter price">
+                <!--Validátorok-->
+                <div *ngIf="price.invalid && (price.dirty || price.touched)" class="alert alert-danger mt-1">
+                    <div *ngIf="price.errors?.['required']">
+                        Price is required
+                    </div>
+                </div>
             </div>
 
             <div class="form-group pt-3">
                 <label for="areaInput">Area</label>
                 <input formControlName="area" type="number" class="form-control" id="areaInput"  placeholder="Enter area">
+                <!--Validátorok-->
+                <div *ngIf="area.invalid && (area.dirty || area.touched)" class="alert alert-danger mt-1">
+                    <div *ngIf="area.errors?.['required']">
+                        Area is required
+                    </div>
+                </div>
             </div>
 
             <div class="form-group pt-3">
                 <label for="descriptionArea">Description</label>
                 <textarea formControlName="description" class="form-control" id="descriptionArea" rows="3"></textarea>
+                <!--Validátorok-->
+                <div *ngIf="description.invalid && (description.dirty || description.touched)" class="alert alert-danger mt-1">
+                    <div *ngIf="description.errors?.['required']">
+                        Description is required
+                    </div>
+                </div>
             </div>
 
             <div class="form-group pt-3">
                 <label for="imageInput">Image Url</label>
                 <input formControlName="imageUrl" type="text" class="form-control" id="imageInput" aria-describedby="imageHelp" placeholder="Enter image url">
-                <small id="imageHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                <small id="imageHelp" class="form-text text-muted">Így kell valamilyen segítő szöveget írni.</small>
             </div>
 
         </div>
@@ -41,7 +68,7 @@
         </div> -->
 
         <!-- submit button-->
-        <div form="test" class="text-center">
+        <div form="test" class="text-center pt-3 pb-5">
             <button type="submit" class="btn btn-info">Create</button>
         </div>
 
