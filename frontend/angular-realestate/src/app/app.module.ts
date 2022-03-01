@@ -18,12 +18,13 @@ import {
   AuthInterceptor,
   authInterceptorProviders,
 } from './helpers/auth.interceptor';
+import { AuthGuard } from './helpers/auth.guard';
 
 const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'signin', component: LoginComponent },
-  { path: 'addnew', component: AddPropertyComponent },
+  { path: 'addnew', component: AddPropertyComponent, canActivate: [AuthGuard] },
   { path: 'properties/:id', component: PropertyDetailsComponent },
   { path: 'properties', component: PropertyListComponent },
   { path: '', redirectTo: '/properties', pathMatch: 'full' },
@@ -48,7 +49,7 @@ const routes: Routes = [
     HttpClientModule,
     ReactiveFormsModule,
   ],
-  providers: [authInterceptorProviders],
+  providers: [authInterceptorProviders, AuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

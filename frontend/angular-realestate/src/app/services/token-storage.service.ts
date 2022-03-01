@@ -30,4 +30,9 @@ export class TokenStorageService {
   public getUser() {
     return JSON.parse(sessionStorage.getItem(USER_KEY));
   }
+
+  public isLoggedIn(): boolean {
+    console.log('ide eljutott');
+    return sessionStorage.getItem('auth-user') != null;
+  }
 }
