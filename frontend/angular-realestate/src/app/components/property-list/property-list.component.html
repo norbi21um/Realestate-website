@@ -1,42 +1,89 @@
-
 <!-- Header-->
 <header class="bg-dark py-5">
-    <div class="container px-4 px-lg-5 my-5">
-        <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder">Különféle szűrők
-            </h1>
-            <p class="lead fw-normal text-white-50 mb-0">Későbbiekben itt lesznek a különféle szűrők
-            </p>
-        </div>
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder">Különféle szűrők</h1>
+      <p class="lead fw-normal text-white-50 mb-0">
+        Későbbiekben itt lesznek a különféle szűrők
+      </p>
     </div>
-  </header>
+
+    <!--Input field for search-->
+    <div class="container mt-3">
+      <div class="row justify-content-center">
+        <div class="col-2">
+          <select class="form-select" aria-label="Default select example">
+            <option selected>District</option>
+            <option value="1">I.</option>
+            <option value="1">II.</option>
+            <option value="2">III.</option>
+            <option value="3">IV.</option>
+            <option value="1">V.</option>
+            <option value="2">VI.</option>
+            <option value="3">VII.</option>
+          </select>
+        </div>
+        <!----------------------->
+        <div class="col-6">
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Address"
+              aria-label="Recipient's username"
+              aria-describedby="basic-addon2"
+            />
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button">
+                Seach
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
 
 <!-- Main section -->
 <section class="py-5">
-    <div class="container px-4 px-lg-5 mt-5">
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            <div class="col mb-5" *ngFor="let tempProperty of properties">
-                <div class="card h-100">
-                    <!-- Property image-->
-                    <img class="card-img-top" src="../assets/images/properties/{{tempProperty.imageUrl}}" alt="..." />
-                    <!-- Property details-->
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <!-- Property price -->
-                            <h5 class="fw-bolder">{{tempProperty.price | currency: 'FT'}}</h5>
-                            <!-- Property Address -->
-                            <p class="font-weight-light">{{tempProperty.address}}</p>
-                            <!-- Property area-->
-                            {{tempProperty.area}}	&#x33A1;
-                        </div>
-                    </div>
-                    <!-- Property actions-->
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a routerLink="/properties/{{tempProperty.id}}" class="btn btn-outline-dark mt-auto">View details</a></div>
-                    </div>
-                </div>
+  <div class="container px-4 px-lg-5 mt-5">
+    <div
+      class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
+    >
+      <div class="col mb-5" *ngFor="let tempProperty of properties">
+        <div class="card h-100">
+          <!-- Property image-->
+          <img
+            class="card-img-top"
+            src="../assets/images/properties/{{ tempProperty.imageUrl }}"
+            alt="..."
+          />
+          <!-- Property details-->
+          <div class="card-body p-4">
+            <div class="text-center">
+              <!-- Property price -->
+              <h5 class="fw-bolder">
+                {{ tempProperty.price | currency: "FT" }}
+              </h5>
+              <!-- Property Address -->
+              <p class="font-weight-light">{{ tempProperty.address }}</p>
+              <!-- Property area-->
+              {{ tempProperty.area }} &#x33A1;
             </div>
-
+          </div>
+          <!-- Property actions-->
+          <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+            <div class="text-center">
+              <a
+                routerLink="/properties/{{ tempProperty.id }}"
+                class="btn btn-outline-dark mt-auto"
+                >View details</a
+              >
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-  </section>
+  </div>
+</section>
