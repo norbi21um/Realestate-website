@@ -22,7 +22,7 @@ export class AuthGuard implements CanActivate {
     if (this.tokenStorage.isLoggedIn()) {
       return true;
     } else {
-      this.router.navigateByUrl('/properties');
+      this.router.navigateByUrl('/signin');
       return false;
     }
   }
