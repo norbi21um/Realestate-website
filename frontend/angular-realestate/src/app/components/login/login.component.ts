@@ -1,42 +1,56 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-
-  loginFormGroup: FormGroup;
-
-  constructor(private formBuilder: FormBuilder,
-              private router: Router) { }
-
-  ngOnInit(): void {
-    this.loginFormGroup = this.formBuilder.group({
-      login: this.formBuilder.group({
-        email: new FormControl('', 
-                              [Validators.required, 
-                               Validators.minLength(2)]),
-
-        password:  new FormControl('', 
-                              [Validators.required])
-      })
-    });
+  form: any = {};
+  isLoggedIn = false;
+  isLoginFailed = false;
+  errorMessage = '';
+  roles: string[] = [];
+  //tmpToken: string = '';
+  constructor(
+    private authService: AuthService,
+    private tokenStorage: TokenStorageService
+  ) {}
+  ngOnInit() {
+    if (this.tokenStorage.getToken()) {
+      this.isLoggedIn = true;
+      this.roles = this.tokenStorage.getUser().roles;
+    }
+    //this.tmpToken = window.sessionStorage.getItem('auth-token');
   }
-
-  get email(){
-    return this.loginFormGroup.get('login.email');
+  onSubmit() {
+    this.authService.login(this.form).subscribe(
+      (data) => {
+        this.tokenStorage.saveToken(data.token);
+        this.tokenStorage.saveUser(data);
+        this.isLoginFailed = false;
+        this.isLoggedIn = true;
+        this.roles = this.tokenStorage.getUser().roles;
+        this.reloadPage();
+        console.log(this.tokenStorage.getToken());
+      },
+      (err) => {
+        this.errorMessage = err.error.message;
+        this.isLoginFailed = true;
+      }
+    );
   }
-
-  get password(){
-    return this.loginFormGroup.get('login.password');
+  reloadPage() {
+    //this.tmpToken = window.sessionStorage.getItem('auth-token');
+    window.location.reload();
   }
-
-  onSubmit(){
-    
-  }
-
 }

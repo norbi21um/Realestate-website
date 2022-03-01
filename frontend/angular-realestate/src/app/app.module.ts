@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PropertyListComponent } from './components/property-list/property-list.component';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
 import { PropertyService } from './services/property.service';
 import { Routes, RouterModule } from '@angular/router';
 import { PropertyDetailsComponent } from './components/property-details/property-details.component';
@@ -12,15 +12,22 @@ import { AddPropertyComponent } from './components/add-property/add-property.com
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { FormsModule } from '@angular/forms';
+import { ProfileComponent } from './components/profile/profile.component';
+import {
+  AuthInterceptor,
+  authInterceptorProviders,
+} from './helpers/auth.interceptor';
 
 const routes: Routes = [
-  {path: 'signup', component: SignupComponent},
-  {path: 'signin', component: LoginComponent},
-  {path: 'addnew', component: AddPropertyComponent},
-  {path: 'properties/:id', component: PropertyDetailsComponent},
-  {path: 'properties', component: PropertyListComponent},
-  {path: '', redirectTo: '/properties', pathMatch: 'full'},
-  {path: '**', redirectTo: '/properties', pathMatch: 'full'}
+  { path: 'profile', component: ProfileComponent },
+  { path: 'signup', component: SignupComponent },
+  { path: 'signin', component: LoginComponent },
+  { path: 'addnew', component: AddPropertyComponent },
+  { path: 'properties/:id', component: PropertyDetailsComponent },
+  { path: 'properties', component: PropertyListComponent },
+  { path: '', redirectTo: '/properties', pathMatch: 'full' },
+  { path: '**', redirectTo: '/properties', pathMatch: 'full' },
 ];
 
 @NgModule({
@@ -30,16 +37,18 @@ const routes: Routes = [
     PropertyDetailsComponent,
     AddPropertyComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    ProfileComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),
     BrowserModule,
     NgbModule,
+    FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
-  providers: [PropertyService],
-  bootstrap: [AppComponent]
+  providers: [authInterceptorProviders],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,43 +1,74 @@
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container px-4 px-lg-5">
+    <a routerLink="/properties" class="navbar-brand">PropertyHub</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+        <li class="nav-item">
+          <a
+            routerLink="/properties"
+            class="nav-link active"
+            aria-current="page"
+            >Home</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/addnew" *ngIf="isLoggedIn"
+            >Create new add</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/signin" *ngIf="!isLoggedIn"
+            >Sign In</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/signup" *ngIf="!isLoggedIn"
+            >Sign Up</a
+          >
+        </li>
 
-  
- <!-- Navigation-->
- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container px-4 px-lg-5" >
-      <a routerLink="/properties" class="navbar-brand">PropertyHub</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-              <li class="nav-item"><a routerLink="/properties" class="nav-link active" aria-current="page">Home</a></li>
-              <li class="nav-item"><a class="nav-link" routerLink="/addnew">Create new add</a></li>
-              <li class="nav-item"><a class="nav-link" routerLink="/signin">Sign In</a></li>
-              <li class="nav-item"><a class="nav-link" routerLink="/signup">Sign Up</a></li>
-
-              <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">User</a>
-                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <li><a class="dropdown-item" href="#!">Profile</a></li>
-                      <li><hr class="dropdown-divider" /></li>
-                      <li><a class="dropdown-item" href="#!">My properties</a></li>
-                      <li><a class="dropdown-item" href="#!">Applications</a></li>
-                      <li><a class="dropdown-item" href="#!">Logout</a></li>
-                  </ul>
-              </li>
+        <li class="nav-item dropdown" *ngIf="isLoggedIn">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbarDropdown"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            >User</a
+          >
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" routerLink="/profile">Profile</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item" href="#!">My properties</a></li>
+            <li><a class="dropdown-item" href="#!">Applications</a></li>
+            <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
           </ul>
-          
-      </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>
-
-
-
 
 <!-- Ehelyett: <app-property-list></app-property-list>
         A router outlet cucc kell -->
 <router-outlet></router-outlet>
 
-
-
 <!-- Footer-->
 <footer class="py-5 bg-dark">
-  <div class="container"><p class="m-0 text-center text-white">Copyright &copy; PropertyHub 2021</p></div>
+  <div class="container">
+    <p class="m-0 text-center text-white">Copyright &copy; PropertyHub 2021</p>
+  </div>
 </footer>

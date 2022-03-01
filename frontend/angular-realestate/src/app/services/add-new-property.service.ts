@@ -4,16 +4,18 @@ import { Property } from '../common/property';
 import { PropertyItem } from '../common/property-item';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AddNewPropertyService {
+  createPropertyUrl: string =
+    'http://localhost:8080/api/properties/createProperty';
 
-  createPropertyUrl: string = "http://localhost:8080/properties/createProperty";
+  constructor(private httpClient: HttpClient) {}
 
-  constructor(private httpClient:HttpClient) { }
-
-  createProperty(propertyItem: PropertyItem){
-    return this.httpClient.post<PropertyItem>(this.createPropertyUrl, propertyItem);
+  createProperty(propertyItem: PropertyItem) {
+    return this.httpClient.post<PropertyItem>(
+      this.createPropertyUrl,
+      propertyItem
+    );
   }
-
 }

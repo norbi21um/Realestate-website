@@ -1,20 +1,22 @@
 package com.realestate.springbootrealestate.controller;
 
-import com.realestate.springbootrealestate.dto.PropertyItem;
+import com.realestate.springbootrealestate.dto.request.PropertyRequest;
 import com.realestate.springbootrealestate.model.Property;
 import com.realestate.springbootrealestate.service.PropertyService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 @RestController
 @AllArgsConstructor
-@RequestMapping("/properties")
-@CrossOrigin(origins = "*")
+@RequestMapping("/api/properties")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class PropertyController {
 
     private final PropertyService propertyService;
@@ -33,7 +35,8 @@ public class PropertyController {
 
     @PostMapping("/createProperty")
     @ResponseStatus(HttpStatus.CREATED)
-    public Property createNewProperty(@RequestBody PropertyItem propertyItem){
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    public Property createNewProperty(@RequestBody PropertyRequest propertyItem){
         return propertyService.createNewProperty(propertyItem);
     }
 

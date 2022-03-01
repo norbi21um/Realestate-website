@@ -1,6 +1,6 @@
 package com.realestate.springbootrealestate.service;
 
-import com.realestate.springbootrealestate.dto.PropertyItem;
+import com.realestate.springbootrealestate.dto.request.PropertyRequest;
 import com.realestate.springbootrealestate.model.Property;
 import com.realestate.springbootrealestate.model.User;
 import com.realestate.springbootrealestate.repository.PropertyRepository;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -19,7 +18,7 @@ public class PropertyService {
     private final PropertyRepository propertyRepository;
     private final UserRepository userRepository;
 
-    public Property createNewProperty(PropertyItem propertyItem) {
+    public Property createNewProperty(PropertyRequest propertyItem) {
         Long userId = propertyItem.getUserId();
 
         User user = userRepository.findById(userId).orElse(null);

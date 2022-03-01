@@ -4,7 +4,9 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { Property } from 'src/app/common/property';
 import { PropertyItem } from 'src/app/common/property-item';
+import { User } from 'src/app/common/user';
 import { AddNewPropertyService } from 'src/app/services/add-new-property.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
   selector: 'app-add-property',
@@ -19,7 +21,8 @@ export class AddPropertyComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private addPropertyService: AddNewPropertyService,
-              private http:HttpClient) { }
+              private http:HttpClient,
+              private tokenStorageService: TokenStorageService) { }
 
   ngOnInit(): void {
     this.addNewFormGroup = this.formBuilder.group({
@@ -80,7 +83,10 @@ export class AddPropertyComponent implements OnInit {
     } else{
       propertyItem.imageUrl = this.addNewFormGroup.get('property.imageUrl').value;
     }
-    propertyItem.userId = 1;
+
+    //User létrehozása és az ID kinyerése, amit felhasználok a hírdetés feladáshoz
+    let user:User = JSON.parse(sessionStorage.getItem("auth-user"));
+    propertyItem.userId = user.id;
 
     
     this.addPropertyService.createProperty(propertyItem).subscribe({

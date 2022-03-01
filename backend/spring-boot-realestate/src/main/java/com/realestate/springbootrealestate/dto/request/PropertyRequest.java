@@ -1,4 +1,4 @@
-package com.realestate.springbootrealestate.dto;
+package com.realestate.springbootrealestate.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @AllArgsConstructor
-public class PropertyItem {
+public class PropertyRequest {
 
     private String address;
 

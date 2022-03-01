@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators'
 })
 export class PropertyService {
 
-  private baseUrl = 'http://localhost:8080/properties'
+  private baseUrl = 'http://localhost:8080/api/properties'
 
   constructor(private httpClient: HttpClient) { }
 
