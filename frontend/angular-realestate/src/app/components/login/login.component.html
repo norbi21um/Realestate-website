@@ -1,5 +1,5 @@
 <div class="container mt-5 mb-5">
-  <h2 class="pb-5">Sing Into Your Account</h2>
+  <h2 class="pb-5">Sign Into Your Account</h2>
 
   <form
     *ngIf="!isLoggedIn"
@@ -17,6 +17,7 @@
         [(ngModel)]="form.username"
         required
         #username="ngModel"
+        placeholder="Username"
       />
       <div
         class="alert alert-danger"
@@ -37,6 +38,7 @@
         required
         minlength="6"
         #password="ngModel"
+        placeholder="Password"
       />
       <div
         class="alert alert-danger"

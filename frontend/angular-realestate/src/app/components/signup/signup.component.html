@@ -1,5 +1,5 @@
 <div class="container mt-5 mb-5">
-  <h2 class="pb-5">Sing Into Your Account</h2>
+  <h2 class="pb-5">Create an account</h2>
 
   <form
     *ngIf="!isSuccessful"
@@ -19,6 +19,7 @@
         minlength="3"
         maxlength="20"
         #username="ngModel"
+        placeholder="Esername"
       />
       <div class="alert-danger" *ngIf="f.submitted && username.invalid">
         <div *ngIf="username.errors?.['required']">Username is required</div>
@@ -41,6 +42,7 @@
         required
         email
         #email="ngModel"
+        placeholder="Email"
       />
       <div class="alert-danger" *ngIf="f.submitted && email.invalid">
         <div *ngIf="email.errors?.['required']">Email is required</div>
@@ -60,6 +62,7 @@
         required
         minlength="6"
         #password="ngModel"
+        placeholder="Password"
       />
       <div class="alert-danger" *ngIf="f.submitted && password.invalid">
         <div *ngIf="password.errors?.['required']">Password is required</div>
@@ -78,6 +81,7 @@
         [(ngModel)]="form.firstName"
         required
         #firstName="ngModel"
+        placeholder="First Name"
       />
       <div
         class="alert alert-danger"
@@ -97,6 +101,7 @@
         [(ngModel)]="form.lastName"
         required
         #lastName="ngModel"
+        placeholder="Last Name"
       />
       <div
         class="alert alert-danger"
@@ -116,6 +121,7 @@
         [(ngModel)]="form.phoneNumber"
         required
         #phoneNumber="ngModel"
+        placeholder="Phone number"
       />
       <div
         class="alert alert-danger"

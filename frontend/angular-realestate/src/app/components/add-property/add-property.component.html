@@ -1,76 +1,156 @@
-
 <div class="container px-4 px-lg-5">
+  <form
+    id="addPropoertyFormId"
+    [formGroup]="addNewFormGroup"
+    (ngSubmit)="onSubmit()"
+  >
+    <div formGroupName="property" class="form-area">
+      <h2 class="pt-5">Add new property</h2>
 
-    <form id="addPropoertyFormId" [formGroup]="addNewFormGroup" (ngSubmit)="onSubmit()">
+      <div class="form-group pt-5">
+        <!--Input field for search-->
 
-        <div formGroupName="property" class="form-area">
-            <h2 class="pt-5">Add new property</h2>
+        <label for="addressInput">Address</label>
+        <div class="row" id="addressInput">
+          <div class="col-2">
+            <select
+              class="form-select scrollable-menu"
+              aria-label="Default select example"
+            >
+              <option selected disabled>District</option>
+              <option value="0">All</option>
+              <option value="1">I.</option>
+              <option value="2">II.</option>
+              <option value="3">III.</option>
+              <option value="4">IV.</option>
+              <option value="5">V.</option>
+              <option value="6">VI.</option>
+              <option value="7">VII.</option>
+              <option value="8">VIII.</option>
+              <option value="9">IX.</option>
+              <option value="10">X.</option>
+              <option value="11">XI.</option>
+              <option value="12">XII.</option>
+              <option value="13">XIII.</option>
+              <option value="14">XIV.</option>
+              <option value="15">XV.</option>
+              <option value="16">XVI.</option>
+              <option value="17">XVII.</option>
+              <option value="18">XVIII.</option>
+              <option value="19">XIX.</option>
+              <option value="20">XX.</option>
+              <option value="21">XXI.</option>
+              <option value="22">XXII.</option>
+              <option value="23">XXIII.</option>
+            </select>
+          </div>
+          <!----------------------->
 
-            <div class="form-group pt-5">
-                <label for="addressInput">Address</label>
-                <input formControlName="address" type="text" class="form-control" id="addressInput" placeholder="Enter address">
-                <!--Validátorok-->
-                <div *ngIf="address.invalid && (address.dirty || address.touched)" class="alert alert-danger mt-1">
-                    <div *ngIf="address.errors?.['required']">
-                        Address is required
-                    </div>
-
-                    <div *ngIf="address.errors?.['minlength']">
-                        Address must be at least 2 characters long
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group pt-3">
-                <label for="priceInput">Price</label>
-                <input formControlName="price" type="number" class="form-control" id="priceInput"  placeholder="Enter price">
-                <!--Validátorok-->
-                <div *ngIf="price.invalid && (price.dirty || price.touched)" class="alert alert-danger mt-1">
-                    <div *ngIf="price.errors?.['required']">
-                        Price is required
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group pt-3">
-                <label for="areaInput">Area</label>
-                <input formControlName="area" type="number" class="form-control" id="areaInput"  placeholder="Enter area">
-                <!--Validátorok-->
-                <div *ngIf="area.invalid && (area.dirty || area.touched)" class="alert alert-danger mt-1">
-                    <div *ngIf="area.errors?.['required']">
-                        Area is required
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group pt-3">
-                <label for="descriptionArea">Description</label>
-                <textarea formControlName="description" class="form-control" id="descriptionArea" rows="3"></textarea>
-                <!--Validátorok-->
-                <div *ngIf="description.invalid && (description.dirty || description.touched)" class="alert alert-danger mt-1">
-                    <div *ngIf="description.errors?.['required']">
-                        Description is required
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group pt-3">
-                <label for="imageInput">Image Url</label>
-                <input formControlName="imageUrl" type="text" class="form-control" id="imageInput" aria-describedby="imageHelp" placeholder="Enter image url">
-                <small id="imageHelp" class="form-text text-muted">Így kell valamilyen segítő szöveget írni.</small>
-            </div>
-
+          <div class="col-10">
+            <input
+              formControlName="address"
+              type="text"
+              class="form-control"
+              id="addressInput"
+              placeholder="Enter address"
+            />
+          </div>
         </div>
+      </div>
 
-        <!-- submit button 
+      <!--Validátorok-->
+      <div
+        *ngIf="address.invalid && (address.dirty || address.touched)"
+        class="alert alert-danger mt-1"
+      >
+        <div *ngIf="address.errors?.['required']">Address is required</div>
+
+        <div *ngIf="address.errors?.['minlength']">
+          Address must be at least 2 characters long
+        </div>
+      </div>
+
+      <div class="form-group pt-3">
+        <label for="priceInput">Price</label>
+        <input
+          formControlName="price"
+          type="number"
+          class="form-control"
+          id="priceInput"
+          placeholder="Enter price"
+        />
+        <!--Validátorok-->
+        <div
+          *ngIf="price.invalid && (price.dirty || price.touched)"
+          class="alert alert-danger mt-1"
+        >
+          <div *ngIf="price.errors?.['required']">Price is required</div>
+        </div>
+      </div>
+
+      <div class="form-group pt-3">
+        <label for="areaInput">Area</label>
+        <input
+          formControlName="area"
+          type="number"
+          class="form-control"
+          id="areaInput"
+          placeholder="Enter area"
+        />
+        <!--Validátorok-->
+        <div
+          *ngIf="area.invalid && (area.dirty || area.touched)"
+          class="alert alert-danger mt-1"
+        >
+          <div *ngIf="area.errors?.['required']">Area is required</div>
+        </div>
+      </div>
+
+      <div class="form-group pt-3">
+        <label for="descriptionArea">Description</label>
+        <textarea
+          formControlName="description"
+          class="form-control"
+          id="descriptionArea"
+          rows="3"
+        ></textarea>
+        <!--Validátorok-->
+        <div
+          *ngIf="
+            description.invalid && (description.dirty || description.touched)
+          "
+          class="alert alert-danger mt-1"
+        >
+          <div *ngIf="description.errors?.['required']">
+            Description is required
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group pt-3">
+        <label for="imageInput">Image Url</label>
+        <input
+          formControlName="imageUrl"
+          type="text"
+          class="form-control"
+          id="imageInput"
+          aria-describedby="imageHelp"
+          placeholder="Enter image url"
+        />
+        <small id="imageHelp" class="form-text text-muted"
+          >Így kell valamilyen segítő szöveget írni.</small
+        >
+      </div>
+    </div>
+
+    <!-- submit button 
         <div class="text-center pt-3 pb-5">
            <a routerLink="/properties"><button  type="submit" class="btn btn-primary btn-lg">Create</button></a>
         </div> -->
 
-        <!-- submit button-->
-        <div form="addPropoertyFormId" class="text-center pt-3 pb-5">
-            <button type="submit" class="btn btn-info">Create</button>
-        </div>
-
-    </form>
+    <!-- submit button-->
+    <div form="addPropoertyFormId" class="text-center pt-3 pb-5">
+      <button type="submit" class="btn btn-info">Create</button>
+    </div>
+  </form>
 </div>
