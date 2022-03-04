@@ -58,5 +58,15 @@
         </div>
       </div>
     </div>
+
+    <!-- if the there are no properties to display-->
+
+    <div
+      *ngIf="properties?.length == 0"
+      class="alert alert-dark col-md-12"
+      role="alert"
+    >
+      No property listings found.
+    </div>
   </div>
 </section>
