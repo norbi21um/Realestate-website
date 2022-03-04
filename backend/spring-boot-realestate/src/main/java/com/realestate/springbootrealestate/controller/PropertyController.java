@@ -26,6 +26,13 @@ public class PropertyController {
         return propertyService.getPropertyById(id);
     }
 
+    @GetMapping(value = "/search")
+    public Map<String, List<Property>> findByDistrict(@RequestParam(name = "district") String district) {
+        Map<String, List<Property>> response = new HashMap<String, List<Property>>();
+        response.put("properties", propertyService.getPropertiesByDistrict(district));
+        return response;
+    }
+
     @RequestMapping("")
     public Map<String, List<Property>> getAllProperties() {
         Map<String, List<Property>> response = new HashMap<String, List<Property>>();

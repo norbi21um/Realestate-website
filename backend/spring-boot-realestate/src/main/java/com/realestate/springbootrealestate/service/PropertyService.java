@@ -49,4 +49,9 @@ public class PropertyService {
         return propertyRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Property not foudn with the id of: " + id));
     }
 
+    public List<Property> getPropertiesByDistrict(String district){
+        return propertyRepository.findByDistrictContaining(district);
+    }
+
+
 }
