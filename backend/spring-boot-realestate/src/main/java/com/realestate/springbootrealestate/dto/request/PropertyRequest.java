@@ -13,6 +13,8 @@ public class PropertyRequest {
 
     private String address;
 
+    private String district;
+
     private BigDecimal price;
 
     private BigDecimal area;

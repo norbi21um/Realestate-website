@@ -20,6 +20,9 @@ public class Property {
     @Column(name = "address")
     private String address;
 
+    @Column(name = "district")
+    private String district;
+
     @Column(name = "price")
     private BigDecimal price;
 

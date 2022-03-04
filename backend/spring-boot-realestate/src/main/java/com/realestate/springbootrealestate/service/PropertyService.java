@@ -25,12 +25,14 @@ public class PropertyService {
 
         if(user != null){
             Property property = new Property();
+
             property.setAddress(propertyItem.getAddress());
             property.setPrice(propertyItem.getPrice());
             property.setArea(propertyItem.getArea());
             property.setImageUrl(propertyItem.getImageUrl());
             property.setDescription(propertyItem.getDescription());
             property.setUser(user);
+            property.setDistrict(propertyItem.getDistrict());
 
             propertyRepository.save(property);
 

@@ -16,6 +16,7 @@
             <select
               class="form-select scrollable-menu"
               aria-label="Default select example"
+              formControlName="district"
             >
               <option selected disabled>District</option>
               <option value="0">All</option>
@@ -43,6 +44,14 @@
               <option value="22">XXII.</option>
               <option value="23">XXIII.</option>
             </select>
+            <div
+              *ngIf="district.invalid && (district.dirty || district.touched)"
+              class="alert alert-danger mt-1"
+            >
+              <div *ngIf="district.errors?.['required']">
+                District is required
+              </div>
+            </div>
           </div>
           <!----------------------->
 
