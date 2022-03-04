@@ -2,21 +2,30 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Property } from '../common/property';
-import { map } from 'rxjs/operators'
+import { map } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PropertyService {
+  private baseUrl = 'http://localhost:8080/api/properties';
 
-  private baseUrl = 'http://localhost:8080/api/properties'
+  constructor(private httpClient: HttpClient) {}
 
-  constructor(private httpClient: HttpClient) { }
+  getPropertyList(): Observable<Property[]> {
+    return this.getProducts(this.baseUrl);
+  }
 
-  getPropertyList():Observable<Property[]>{
-    return this.httpClient.get<GetResponse>(this.baseUrl).pipe(
-      map(response => response.properties)
-    )
+  searchProperties(theKeyword: string): Observable<Property[]> {
+    const searchUrl = `${this.baseUrl}/searchByKeyword?address=${theKeyword}`;
+
+    return this.getProducts(searchUrl);
+  }
+
+  private getProducts(url): Observable<Property[]> {
+    return this.httpClient
+      .get<GetResponse>(url)
+      .pipe(map((response) => response.properties));
   }
 
   getProperty(thePopertyId: number): Observable<Property> {
@@ -28,7 +37,5 @@ export class PropertyService {
 }
 
 interface GetResponse {
-  
-    properties: Property[];
-  
+  properties: Property[];
 }
