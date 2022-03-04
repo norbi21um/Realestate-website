@@ -19,8 +19,10 @@ import {
   authInterceptorProviders,
 } from './helpers/auth.interceptor';
 import { AuthGuard } from './helpers/auth.guard';
+import { SearchComponent } from './components/search/search.component';
 
 const routes: Routes = [
+  { path: 'search/:keyword', component: PropertyListComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'signup', component: SignupComponent },
   { path: 'signin', component: LoginComponent },
@@ -40,6 +42,7 @@ const routes: Routes = [
     LoginComponent,
     SignupComponent,
     ProfileComponent,
+    SearchComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),
