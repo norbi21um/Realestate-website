@@ -13,6 +13,8 @@ export class PropertyListComponent implements OnInit {
 
   searchMode: boolean;
 
+  districtMode: boolean;
+
   properties: Property[];
 
   constructor(
@@ -25,10 +27,17 @@ export class PropertyListComponent implements OnInit {
   }
   listProperties() {
     //Megnézem, hogy van-e keyword és ha van akkor search módban vagyok
-    this.searchMode = this.route.snapshot.paramMap.has('keyword');
+    if (this.route.snapshot.paramMap.has('keyword')) {
+      this.searchMode = true;
+    } else if (this.route.snapshot.paramMap.has('district')) {
+      this.districtMode = true;
+    }
+    //this.searchMode = this.route.snapshot.paramMap.has('keyword');
 
     if (this.searchMode) {
       this.handleSearchProperties();
+    } else if (this.districtMode) {
+      this.handleOnlyDistrictSearchProperties();
     } else {
       this.handleListProperties();
     }
@@ -36,8 +45,23 @@ export class PropertyListComponent implements OnInit {
 
   handleSearchProperties() {
     const theKeyword: string = this.route.snapshot.paramMap.get('keyword');
+    const theDistrict: string = this.route.snapshot.paramMap.get('district');
+    this.districtMode = false;
+    this.searchMode = false;
 
-    this.propertyService.searchProperties(theKeyword).subscribe((data) => {
+    this.propertyService
+      .searchProperties(theKeyword, theDistrict)
+      .subscribe((data) => {
+        this.properties = data;
+      });
+  }
+
+  handleOnlyDistrictSearchProperties() {
+    const theDistrict: string = this.route.snapshot.paramMap.get('district');
+    this.districtMode = false;
+    this.searchMode = false;
+
+    this.propertyService.searchProperties('', theDistrict).subscribe((data) => {
       this.properties = data;
     });
   }

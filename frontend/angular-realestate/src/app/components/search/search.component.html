@@ -3,10 +3,11 @@
   <div class="row justify-content-center">
     <div class="col-2">
       <select
+        #searchDistrictInput
         class="form-select scrollable-menu"
         aria-label="Default select example"
       >
-        <option selected disabled>District</option>
+        <option value="0" selected disabled>District</option>
         <option value="0">All</option>
         <option value="I">I.</option>
         <option value="II">II.</option>
@@ -37,16 +38,20 @@
     <div class="col-6">
       <div class="input-group">
         <input
-          #searchInput
+          #searchAddressInput
           type="text"
           class="form-control"
           placeholder="Seach for addresses"
-          (keyup.enter)="doSearch(searchInput.value)"
+          (keyup.enter)="
+            doSearch(searchAddressInput.value, searchDistrictInput.value)
+          "
         />
         <div class="input-group-append">
           <button
-            (click)="doSearch(searchInput.value)"
-            class="btn btn-outline-secondary"
+            (click)="
+              doSearch(searchAddressInput.value, searchDistrictInput.value)
+            "
+            class="btn btn-outline-secondary submit"
           >
             Seach
           </button>

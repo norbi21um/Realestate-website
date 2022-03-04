@@ -22,7 +22,8 @@ import { AuthGuard } from './helpers/auth.guard';
 import { SearchComponent } from './components/search/search.component';
 
 const routes: Routes = [
-  { path: 'search/:keyword', component: PropertyListComponent },
+  { path: 'search/:district', component: PropertyListComponent },
+  { path: 'search/:keyword/:district', component: PropertyListComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'signup', component: SignupComponent },
   { path: 'signin', component: LoginComponent },

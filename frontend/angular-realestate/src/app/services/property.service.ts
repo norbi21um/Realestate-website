@@ -16,8 +16,15 @@ export class PropertyService {
     return this.getProducts(this.baseUrl);
   }
 
-  searchProperties(theKeyword: string): Observable<Property[]> {
-    const searchUrl = `${this.baseUrl}/searchByKeyword?address=${theKeyword}`;
+  searchProperties(
+    theKeyword: string,
+    theDistrict: string
+  ): Observable<Property[]> {
+    if (theKeyword == '') {
+      console.log('NINCS ADDRESS');
+    }
+
+    const searchUrl = `${this.baseUrl}/searchByKeyword?district=${theDistrict}&address=${theKeyword}`;
 
     return this.getProducts(searchUrl);
   }
