@@ -26,17 +26,26 @@ public class PropertyController {
         return propertyService.getPropertyById(id);
     }
 
-    @GetMapping(value = "/search")
-    public Map<String, List<Property>> findByDistrict(@RequestParam(name = "district") String district) {
-        Map<String, List<Property>> response = new HashMap<String, List<Property>>();
-        response.put("properties", propertyService.getPropertiesByDistrict(district));
-        return response;
-    }
+    //@GetMapping(value = "/search")
+    //public Map<String, List<Property>> findByDistrict(@RequestParam(name = "district") String district) {
+    //    Map<String, List<Property>> response = new HashMap<String, List<Property>>();
+    //    response.put("properties", propertyService.getPropertiesByDistrict(district));
+    //    return response;
+    //}
+/**
 
     @GetMapping(value = "/searchByKeyword")
     public Map<String, List<Property>> findByAddress(@RequestParam(name = "address") String address) {
         Map<String, List<Property>> response = new HashMap<String, List<Property>>();
         response.put("properties", propertyService.getPropertiesByAddress(address));
+        return response;
+    }*/
+
+    @GetMapping(value = "/searchByKeyword")
+    public Map<String, List<Property>> findByAddress(@RequestParam(name = "district") String district,
+                                                     @RequestParam(name = "address") String address) {
+        Map<String, List<Property>> response = new HashMap<String, List<Property>>();
+        response.put("properties", propertyService.getPropertiesByAddress(district, address));
         return response;
     }
 

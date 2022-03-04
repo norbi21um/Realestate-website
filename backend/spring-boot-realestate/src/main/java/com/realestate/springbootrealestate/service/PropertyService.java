@@ -49,12 +49,20 @@ public class PropertyService {
         return propertyRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Property not foudn with the id of: " + id));
     }
 
-    public List<Property> getPropertiesByDistrict(String district){
-        return propertyRepository.findByDistrict(district);
-    }
+    //public List<Property> getPropertiesByDistrict(String district){
+    //    return propertyRepository.findByDistrict(district);
+    //}
 
-    public List<Property> getPropertiesByAddress(String address){
-        return propertyRepository.findByAddressContaining(address);
+    public List<Property> getPropertiesByAddress(String district, String address){
+
+        if(district.equals("0")){
+            return propertyRepository.findByAddressContaining(address);
+        } else {
+            String addressToUseInLikeOperation = "%" + address +"%";
+            return propertyRepository.findByDistrictAndAddress(addressToUseInLikeOperation, district);
+        }
+
+
     }
 
 }
