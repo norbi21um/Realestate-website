@@ -50,8 +50,11 @@ public class PropertyService {
     }
 
     public List<Property> getPropertiesByDistrict(String district){
-        return propertyRepository.findByDistrictContaining(district);
+        return propertyRepository.findByDistrict(district);
     }
 
+    public List<Property> getPropertiesByAddress(String address){
+        return propertyRepository.findByAddressContaining(address);
+    }
 
 }

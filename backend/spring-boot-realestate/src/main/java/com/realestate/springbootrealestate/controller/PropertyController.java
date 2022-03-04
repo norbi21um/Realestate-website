@@ -33,6 +33,13 @@ public class PropertyController {
         return response;
     }
 
+    @GetMapping(value = "/searchByKeyword")
+    public Map<String, List<Property>> findByAddress(@RequestParam(name = "address") String address) {
+        Map<String, List<Property>> response = new HashMap<String, List<Property>>();
+        response.put("properties", propertyService.getPropertiesByAddress(address));
+        return response;
+    }
+
     @RequestMapping("")
     public Map<String, List<Property>> getAllProperties() {
         Map<String, List<Property>> response = new HashMap<String, List<Property>>();
