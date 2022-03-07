@@ -20,10 +20,6 @@ export class PropertyService {
     theKeyword: string,
     theDistrict: string
   ): Observable<Property[]> {
-    if (theKeyword == '') {
-      console.log('NINCS ADDRESS');
-    }
-
     const searchUrl = `${this.baseUrl}/searchByKeyword?district=${theDistrict}&address=${theKeyword}`;
 
     return this.getProducts(searchUrl);

@@ -28,8 +28,10 @@ export class PropertyListComponent implements OnInit {
   listProperties() {
     //Megnézem, hogy van-e keyword és ha van akkor search módban vagyok
     if (this.route.snapshot.paramMap.has('keyword')) {
+      console.log('porperty-list van keyword');
       this.searchMode = true;
     } else if (this.route.snapshot.paramMap.has('district')) {
+      console.log('porperty-list van district');
       this.districtMode = true;
     }
     //this.searchMode = this.route.snapshot.paramMap.has('keyword');
