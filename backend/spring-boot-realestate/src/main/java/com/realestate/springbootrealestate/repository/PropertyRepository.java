@@ -14,7 +14,8 @@ public interface PropertyRepository extends JpaRepository<Property, Long> {
 
     //Ehez ha hozzá írom, hogy Containing akkor az olyan, mintha SQL-ben a "like" kulcsszót használnám
     //findByDistrictContaining
-    //List<Property> findByDistrict(String district);
+
+    List<Property> findByDistrict(String district);
 
     List<Property> findByAddressContaining(String address);
 

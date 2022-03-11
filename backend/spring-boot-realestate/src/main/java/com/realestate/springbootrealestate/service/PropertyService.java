@@ -62,4 +62,8 @@ public class PropertyService {
 
     }
 
+    public List<Property> getRandomPropertiesByDistrict(String disctrict){
+        return propertyRepository.findByDistrict(disctrict);
+    }
+
 }

@@ -49,6 +49,13 @@ public class PropertyController {
         return response;
     }
 
+    @GetMapping(value = "/recommendation")
+    public Map<String, List<Property>> getrecommendation(@RequestParam(name = "district") String district){
+        Map<String, List<Property>> response = new HashMap<String, List<Property>>();
+        response.put("properties", propertyService.getRandomPropertiesByDistrict(district));
+        return response;
+    }
+
     @RequestMapping("")
     public Map<String, List<Property>> getAllProperties() {
         Map<String, List<Property>> response = new HashMap<String, List<Property>>();
