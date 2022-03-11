@@ -19,7 +19,7 @@ public class UserController {
 
     //Csak tesztelés
     @GetMapping(value = "/{id}")
-    //@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public User findById(@RequestParam(name = "id") Long id) {
         return userService.getUserById(id);
     }
