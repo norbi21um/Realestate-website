@@ -15,6 +15,6 @@ export class UserService {
     // URL építés a user id alapján
     const userUrl = `${this.baseUrl}?id=${theUserId}`;
 
-    return this.httpClient.get<User>('http://localhost:8080/api/user?id=12');
+    return this.httpClient.get<User>(userUrl);
   }
 }

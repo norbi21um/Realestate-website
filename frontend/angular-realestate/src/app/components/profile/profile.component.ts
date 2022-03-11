@@ -25,9 +25,9 @@ export class ProfileComponent implements OnInit {
   }
 
   getUserData() {
-    this.userService.getUser(3).subscribe((data) => {
+    const user = this.token.getUser();
+    this.userService.getUser(user.id).subscribe((data) => {
       this.user = data;
-      console.log(this.user.email);
     });
   }
 }
