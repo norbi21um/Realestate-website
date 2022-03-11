@@ -36,6 +36,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     @Autowired
     AuthenticationManager authenticationManager;
+
+    /**
+     * Kell külön UserService és RoleService, mert ez így nem szép
+     **/
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -56,7 +60,8 @@ public class AuthController {
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(new JwtResponse(jwt,
+        return ResponseEntity.ok(new JwtResponse(
+                jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
                 userDetails.getEmail(),

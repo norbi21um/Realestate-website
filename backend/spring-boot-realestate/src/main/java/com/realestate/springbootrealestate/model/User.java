@@ -34,6 +34,7 @@ public class User {
 
     @NotBlank
     @Size(max = 120)
+    @JsonIgnore
     private String password;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")

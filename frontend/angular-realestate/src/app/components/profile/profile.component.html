@@ -46,19 +46,16 @@
     </div>
   </div>
   <div class="card mt-2">
-    <div class="card-body">Name: Maszlag Norbert</div>
+    <div class="card-body">Name: {{ user.firstName }} {{ user.lastName }}</div>
   </div>
   <div class="card mt-2">
-    <div class="card-body">Email: maszlag.norbert@gmail.com</div>
+    <div class="card-body">Email: {{ user.email }}</div>
   </div>
   <div class="card mt-2">
-    <div class="card-body">Phone number: +36 30 623 4932</div>
+    <div class="card-body">Phone number: {{ user.phoneNumber }}</div>
   </div>
   <div class="card mt-2">
-    <div class="card-body">This is some text within a card body.</div>
-  </div>
-  <div class="card mt-2">
-    <div class="card-body">This is some text within a card body.</div>
+    <div class="card-body">Username: {{ user.username }}</div>
   </div>
 </div>
 
