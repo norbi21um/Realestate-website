@@ -7,45 +7,42 @@ import { PropertyService } from 'src/app/services/property.service';
 @Component({
   selector: 'app-property-details',
   templateUrl: './property-details.component.html',
-  styleUrls: ['./property-details.component.css']
+  styleUrls: ['./property-details.component.css'],
 })
 export class PropertyDetailsComponent implements OnInit {
-
   property: Property = new Property();
 
   ///Csak ideiglenes tesztelésnek, majd a későbbiekben pontosabb oda tartozó Property-k kerülnek
-  properties:Property[] = [];
+  properties: Property[] = [];
 
-  constructor(private propertyService: PropertyService,
-              private route:ActivatedRoute) { }
+  constructor(
+    private propertyService: PropertyService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(() =>{
+    //Betölti az aktuális ingatlant
+    this.route.paramMap.subscribe(() => {
       this.handlePropertyDetails();
-    })
-
-    this.handleRelatedProperties();
+    });
   }
 
-  ///Csak ideiglenes tesztelésnek, majd a későbbiekben pontosabb oda tartozó Property-k kerülnek
-  handleRelatedProperties() {
-    this.propertyService.getPropertyList().subscribe(
-      data => {
+  handleRelatedProperties(district: string) {
+    this.propertyService
+      .getRecommendedProperties(this.property.district)
+      .subscribe((data) => {
         this.properties = data;
-      }
-    )
+      });
   }
 
   handlePropertyDetails() {
-    
     // id string-et átkonvertálja "+" jel segítségével számmá
     const thePopertyId: number = +this.route.snapshot.paramMap.get('id');
 
-    this.propertyService.getProperty(thePopertyId).subscribe(
-      data => {
-        this.property = data;
-      }
-    )
+    this.propertyService.getProperty(thePopertyId).subscribe((data) => {
+      this.property = data;
+      //Betölti az ajánlott ingatlanokat
+      this.handleRelatedProperties(this.property.district);
+    });
   }
-
 }

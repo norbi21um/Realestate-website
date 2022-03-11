@@ -13,19 +13,31 @@ export class PropertyService {
   constructor(private httpClient: HttpClient) {}
 
   getPropertyList(): Observable<Property[]> {
-    return this.getProducts(this.baseUrl);
+    return this.getProperties(this.baseUrl);
   }
 
+  /**
+   * Keresés
+   */
   searchProperties(
     theKeyword: string,
     theDistrict: string
   ): Observable<Property[]> {
     const searchUrl = `${this.baseUrl}/searchByKeyword?district=${theDistrict}&address=${theKeyword}`;
 
-    return this.getProducts(searchUrl);
+    return this.getProperties(searchUrl);
   }
 
-  private getProducts(url): Observable<Property[]> {
+  getRecommendedProperties(theDistrict: string): Observable<Property[]> {
+    const searchUrl = `${this.baseUrl}/recommendation?district=${theDistrict}`;
+
+    return this.getProperties(searchUrl);
+  }
+
+  /**
+   * Általános ingatlan listázás a megadott URL alapján
+   */
+  private getProperties(url): Observable<Property[]> {
     return this.httpClient
       .get<GetResponse>(url)
       .pipe(map((response) => response.properties));
