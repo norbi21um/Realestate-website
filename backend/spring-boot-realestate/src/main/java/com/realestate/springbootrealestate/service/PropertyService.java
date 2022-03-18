@@ -9,7 +9,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 @AllArgsConstructor
@@ -51,7 +53,6 @@ public class PropertyService {
 
 
     public List<Property> getPropertiesByAddress(String district, String address){
-
         if(district.equals("0")){
             return propertyRepository.findByAddressContaining(address);
         } else {
@@ -62,8 +63,33 @@ public class PropertyService {
 
     }
 
+    //Returns a random list of properties from a given district
     public List<Property> getRandomPropertiesByDistrict(String disctrict){
-        return propertyRepository.findByDistrict(disctrict);
+        return getRandomElements(propertyRepository.findByDistrict(disctrict), 4);
+    }
+
+    private List<Property> getRandomElements(List<Property> list, int totalItems) {
+        Random rand = new Random();
+
+        //To avoid index out of bounds exception
+        if(totalItems > list.size()){
+            totalItems = list.size();
+        }
+
+        //temp list
+        List<Property> newList = new ArrayList<>();
+        for (int i = 0; i < totalItems; i++) {
+
+            // random index number between 0 and list size
+            int randomIndex = rand.nextInt(list.size());
+
+            // Add to new list
+            newList.add(list.get(randomIndex));
+
+            // Remove selected element from original list
+            list.remove(randomIndex);
+        }
+        return newList;
     }
 
 }
