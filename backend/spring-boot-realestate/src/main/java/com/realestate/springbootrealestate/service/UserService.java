@@ -20,7 +20,4 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Property not foudn with the id of: " + id));
     }
 
-
-
-
 }

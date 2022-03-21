@@ -34,13 +34,13 @@ export class PropertyListComponent implements OnInit {
       console.log('porperty-list van district');
       this.districtMode = true;
     }
-    //this.searchMode = this.route.snapshot.paramMap.has('keyword');
 
     if (this.searchMode) {
       this.handleSearchProperties();
     } else if (this.districtMode) {
       this.handleOnlyDistrictSearchProperties();
     } else {
+      //Ha nincs keresési módban ki listázza az összes ingatlant
       this.handleListProperties();
     }
   }
