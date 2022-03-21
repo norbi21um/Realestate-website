@@ -45,17 +45,37 @@
       </div>
     </div>
   </div>
-  <div class="card mt-2">
-    <div class="card-body">Name: {{ user.firstName }} {{ user.lastName }}</div>
-  </div>
-  <div class="card mt-2">
-    <div class="card-body">Email: {{ user.email }}</div>
-  </div>
-  <div class="card mt-2">
-    <div class="card-body">Phone number: {{ user.phoneNumber }}</div>
-  </div>
-  <div class="card mt-2">
-    <div class="card-body">Username: {{ user.username }}</div>
+
+  <!-- User data -->
+  <div class="row mt-5">
+    <!-- Profile picture -->
+    <div class="col col-5 align-items-center">
+      <img
+        src="../assets/images/profiles/default_profile.png"
+        alt="Cinque Terre"
+        width="304"
+        height="236"
+      />
+      <input type="file" class="form-control" id="customFile" />
+    </div>
+
+    <!-- User Information -->
+    <div class="col">
+      <div class="card mt-2">
+        <div class="card-body">
+          Name: {{ user.firstName }} {{ user.lastName }}
+        </div>
+      </div>
+      <div class="card mt-2">
+        <div class="card-body">Email: {{ user.email }}</div>
+      </div>
+      <div class="card mt-2">
+        <div class="card-body">Phone number: {{ user.phoneNumber }}</div>
+      </div>
+      <div class="card mt-2">
+        <div class="card-body">Username: {{ user.username }}</div>
+      </div>
+    </div>
   </div>
 
   <!-- A felhasználó által feladott hirdetések -->
