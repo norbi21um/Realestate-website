@@ -165,9 +165,9 @@
       <!-- Táblázatok -->
 
       <!-- A felhasználó ingatlajai -->
-      <div class="card mb-4">
+      <!--<div class="card mb-4">
         <div class="card-body">
-          <p class="mb-4">Your properties</p>
+          <p class="mb-4">Your applications</p>
           <table class="table">
             <thead>
               <tr>
@@ -183,26 +183,14 @@
                 <td>Mark</td>
                 <td>Otto</td>
                 <td>@mdo</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
               </tr>
             </tbody>
           </table>
         </div>
-      </div>
+      </div>-->
 
       <!-- A felhasználó ingatla jelentkezései -->
-      <div class="card mb-4">
+      <div class="card mb-4" *ngIf="user.properties.length != 0">
         <div class="card-body">
           <p class="mb-4">Your properties</p>
           <table class="table">
@@ -215,23 +203,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr *ngFor="let tempProperty of user.properties">
                 <th scope="row">1</th>
-                <td>Mark</td>
+                <td>{{ tempProperty.address }}</td>
                 <td>Otto</td>
                 <td>@mdo</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
               </tr>
             </tbody>
           </table>
@@ -374,6 +350,22 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mb-4">
+    <div class="card-header">Get Notified!</div>
+    <div class="card-body">
+      <h5 class="card-title">
+        Subscribe to get the latest aperment listings in you choosen area.
+      </h5>
+      <p class="card-text">
+        Ide madj valamit írok, amikor ki találom mit lehetne ide írni.
+      </p>
+      <div class="row">
+        <!--------------------->
+        <a href="#" class="btn btn-primary col-2">Subscribe</a>
       </div>
     </div>
   </div>

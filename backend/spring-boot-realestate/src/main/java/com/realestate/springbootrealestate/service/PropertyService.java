@@ -20,6 +20,7 @@ public class PropertyService {
     private final PropertyRepository propertyRepository;
     private final UserRepository userRepository;
 
+    /** Új ingatlan létrehozása **/
     public Property createNewProperty(PropertyRequest propertyItem) {
         Long userId = propertyItem.getUserId();
 
@@ -43,6 +44,7 @@ public class PropertyService {
         return null;
     }
 
+    /** Minden ingatlan lekérdezése **/
     public List<Property> getAllProperties(){
         return propertyRepository.findAll();
     }

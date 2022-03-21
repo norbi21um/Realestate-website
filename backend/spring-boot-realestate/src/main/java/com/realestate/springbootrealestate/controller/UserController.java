@@ -1,5 +1,6 @@
 package com.realestate.springbootrealestate.controller;
 
+import com.realestate.springbootrealestate.dto.response.UserResponse;
 import com.realestate.springbootrealestate.model.Property;
 import com.realestate.springbootrealestate.model.User;
 import com.realestate.springbootrealestate.service.UserService;
@@ -19,8 +20,8 @@ public class UserController {
 
     //Csak tesztelés
     @GetMapping(value = "/{id}")
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-    public User findById(@RequestParam(name = "id") Long id) {
+    //@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    public UserResponse findById(@RequestParam(name = "id") Long id) {
         return userService.getUserById(id);
     }
 
