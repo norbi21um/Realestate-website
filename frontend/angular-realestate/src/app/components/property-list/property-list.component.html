@@ -14,10 +14,23 @@
     <app-search></app-search>
   </div>
 </header>
+<div class="container px-lg-5 mt-4 align-items-end">
+  <div class="d-flex flex-row justify-content-end p-1">
+    <select
+      class="form-select"
+      aria-label="Default select example"
+      style="width: 200px"
+    >
+      <option selected>Sort by</option>
+      <option value="1">Price ascending</option>
+      <option value="2">Price Descending</option>
+    </select>
+  </div>
+</div>
 
 <!-- Main section -->
 <section class="py-5">
-  <div class="container px-4 px-lg-5 mt-5">
+  <div class="container px-4 px-lg-5">
     <div
       class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
     >
@@ -59,7 +72,7 @@
       </div>
     </div>
 
-    <!-- if the there are no properties to display-->
+    <!-- if there are no properties to display-->
 
     <div
       *ngIf="properties?.length == 0"
