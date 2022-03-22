@@ -59,7 +59,7 @@ public class PropertyController {
     @RequestMapping("")
     public Map<String, List<Property>> getAllProperties() {
         Map<String, List<Property>> response = new HashMap<String, List<Property>>();
-        response.put("properties", propertyService.getAllProperties());
+        response.put("properties", propertyService.getAllProperties(false, false));
         return response;
     }
 

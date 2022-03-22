@@ -45,7 +45,12 @@ public class PropertyService {
     }
 
     /** Minden ingatlan lekérdezése **/
-    public List<Property> getAllProperties(){
+    public List<Property> getAllProperties(boolean ascend, boolean descend){
+        if(ascend){
+            return propertyRepository.findAllByOrderByPriceAsc();
+        } else if(descend){
+            return propertyRepository.findAllByOrderByPriceDesc();
+        }
         return propertyRepository.findAll();
     }
 
