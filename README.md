@@ -5,7 +5,13 @@ Ingatlan portál Angular és Spring boot full stack applikáció MySQL server ha
 
 Spring Security segítségével JWT tokennel autentikálom a felhasználót. Vannak védett oldal részek, amiket csak megfelelő tokennel lehet bejelentkezés után elérni, ezeket továbbá route guardokkal védem a frontenden.
 
-Spring REST API-on keresztül lehet létrehozni ingatlant, regisztrálni felhasználót, lekérdezni az ingatlanokat, azokat egyenként és szűrni is lehet köztük. A komplexebb lekérdezéseket a szerverz felé (mint pl.: keresés kerület és cím szerint illetve bármely kombinációjuk szeritn) pedig JPQL segítségével implementáltma.
+Spring REST API-on keresztül lehet létrehozni ingatlant, regisztrálni felhasználót, lekérdezni az ingatlanokat, azokat egyenként és szűrni is lehet köztük. A komplexebb lekérdezéseket a szerverz felé (mint pl.: keresés kerület és cím szerint illetve bármely kombinációjuk szeritn) pedig JPQL segítségével implementáltm.
+
+További hetekben megvalósítom a követekzőket:
+-UI szépítése
+-Web Push Notification, amivel fel lehet iratkozni értesítésekre, amik akkor jeleznek ha adott kerületbe feltöltenek egy új ingatlant
+-Token frissítés
+-Admin panel
 
 
 
