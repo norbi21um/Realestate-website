@@ -7,11 +7,11 @@ Spring Security segítségével JWT tokennel autentikálom a felhasználót. Van
 
 Spring REST API-on keresztül lehet létrehozni ingatlant, regisztrálni felhasználót, lekérdezni az ingatlanokat, azokat egyenként és szűrni is lehet köztük. A komplexebb lekérdezéseket a szerverz felé (mint pl.: keresés kerület és cím szerint illetve bármely kombinációjuk szeritn) pedig JPQL segítségével implementáltm.
 
-További hetekben megvalósítom a követekzőket:
--UI szépítése
--Web Push Notification, amivel fel lehet iratkozni értesítésekre, amik akkor jeleznek ha adott kerületbe feltöltenek egy új ingatlant
--Token frissítés
--Admin panel
+További hetekben megvalósítom a követekzőket:  
+-UI szépítése  
+-Web Push Notification, amivel fel lehet iratkozni értesítésekre, amik akkor jeleznek ha adott kerületbe feltöltenek egy új ingatlant  
+-Token frissítés  
+-Admin panel  
 
 
 
