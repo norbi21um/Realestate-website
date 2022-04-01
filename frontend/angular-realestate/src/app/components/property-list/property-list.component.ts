@@ -28,49 +28,81 @@ export class PropertyListComponent implements OnInit {
   listProperties() {
     //Megnézem, hogy van-e keyword és ha van akkor search módban vagyok
     if (this.route.snapshot.paramMap.has('keyword')) {
-      console.log('porperty-list van keyword');
+      //console.log('porperty-list van keyword');
       this.searchMode = true;
     } else if (this.route.snapshot.paramMap.has('district')) {
-      console.log('porperty-list van district');
+      //console.log('porperty-list van district');
       this.districtMode = true;
     }
 
     if (this.searchMode) {
-      this.handleSearchProperties();
+      this.handleSearchProperties('');
     } else if (this.districtMode) {
-      this.handleOnlyDistrictSearchProperties();
+      this.handleOnlyDistrictSearchProperties('');
     } else {
       //Ha nincs keresési módban ki listázza az összes ingatlant
-      this.handleListProperties();
+      this.handleListProperties('');
     }
   }
 
-  handleSearchProperties() {
+  handleSearchProperties(sortBy: string) {
     const theKeyword: string = this.route.snapshot.paramMap.get('keyword');
     const theDistrict: string = this.route.snapshot.paramMap.get('district');
     this.districtMode = false;
     this.searchMode = false;
 
     this.propertyService
-      .searchProperties(theKeyword, theDistrict)
+      .searchProperties(theKeyword, theDistrict, sortBy)
       .subscribe((data) => {
         this.properties = data;
       });
   }
 
-  handleOnlyDistrictSearchProperties() {
+  handleOnlyDistrictSearchProperties(sortBy: string) {
     const theDistrict: string = this.route.snapshot.paramMap.get('district');
     this.districtMode = false;
     this.searchMode = false;
 
-    this.propertyService.searchProperties('', theDistrict).subscribe((data) => {
+    this.propertyService
+      .searchProperties('', theDistrict, sortBy)
+      .subscribe((data) => {
+        this.properties = data;
+      });
+  }
+
+  handleListProperties(sortBy: string) {
+    this.propertyService.getPropertyList(sortBy).subscribe((data) => {
       this.properties = data;
     });
   }
 
-  handleListProperties() {
-    this.propertyService.getPropertyList().subscribe((data) => {
-      this.properties = data;
-    });
+  /**
+   * A rendezés beállító select input változáskor meghívja ezt a függvényt
+   * ami a kilistázást meghívja a kiválasztott paraméterrel.
+   * @param sortBy a rendezés módja
+   */
+  sortProperties(sortBy) {
+    //Megnézem, hogy van-e keyword és ha van akkor search módban vagyok
+    if (this.route.snapshot.paramMap.has('keyword')) {
+      //console.log('porperty-list van keyword');
+      this.searchMode = true;
+    } else if (this.route.snapshot.paramMap.has('district')) {
+      //console.log('porperty-list van district');
+      this.districtMode = true;
+    }
+
+    if (this.searchMode) {
+      //Ha kulcsszó szerint van szűrés
+      console.log('searchMode');
+      this.handleSearchProperties(sortBy);
+    } else if (this.districtMode) {
+      //Ha kerület szerint van szűrés
+      console.log('districtMode');
+      this.handleOnlyDistrictSearchProperties(sortBy);
+    } else {
+      //Ha nincs keresési módban
+      console.log('simaMode');
+      this.handleListProperties(sortBy);
+    }
   }
 }

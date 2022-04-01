@@ -25,27 +25,14 @@ public class PropertyController {
     public Property findById(@PathVariable("id") Long id) {
         return propertyService.getPropertyById(id);
     }
-
-    //@GetMapping(value = "/search")
-    //public Map<String, List<Property>> findByDistrict(@RequestParam(name = "district") String district) {
-    //    Map<String, List<Property>> response = new HashMap<String, List<Property>>();
-    //    response.put("properties", propertyService.getPropertiesByDistrict(district));
-    //    return response;
-    //}
-/**
-
-    @GetMapping(value = "/searchByKeyword")
-    public Map<String, List<Property>> findByAddress(@RequestParam(name = "address") String address) {
-        Map<String, List<Property>> response = new HashMap<String, List<Property>>();
-        response.put("properties", propertyService.getPropertiesByAddress(address));
-        return response;
-    }*/
+    
 
     @GetMapping(value = "/searchByKeyword")
     public Map<String, List<Property>> findByAddress(@RequestParam(name = "district") String district,
-                                                     @RequestParam(name = "address") String address) {
+                                                     @RequestParam(name = "address") String address,
+                                                     @RequestParam(name = "sortBy") String sort) {
         Map<String, List<Property>> response = new HashMap<String, List<Property>>();
-        response.put("properties", propertyService.getPropertiesByAddress(district, address));
+        response.put("properties", propertyService.getPropertiesByAddress(district, address, sort));
         return response;
     }
 
@@ -57,9 +44,15 @@ public class PropertyController {
     }
 
     @RequestMapping("")
-    public Map<String, List<Property>> getAllProperties() {
+    public Map<String, List<Property>> getAllProperties(@RequestParam(name = "sortBy") String sort) {
         Map<String, List<Property>> response = new HashMap<String, List<Property>>();
-        response.put("properties", propertyService.getAllProperties(false, false));
+        if(sort.equals("asc")){
+            response.put("properties", propertyService.getAllProperties(true, false));
+        } else if(sort.equals("desc")){
+            response.put("properties", propertyService.getAllProperties(false, true));
+        } else {
+            response.put("properties", propertyService.getAllProperties(false, false));
+        }
         return response;
     }
 

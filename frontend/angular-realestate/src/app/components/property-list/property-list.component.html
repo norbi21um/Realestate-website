@@ -17,13 +17,15 @@
 <div class="container px-lg-5 mt-4 align-items-end">
   <div class="d-flex flex-row justify-content-end p-1">
     <select
+      #sortInput
       class="form-select"
       aria-label="Default select example"
       style="width: 200px"
+      (change)="sortProperties(sortInput.value)"
     >
       <option selected>Sort by</option>
-      <option value="1">Price ascending</option>
-      <option value="2">Price Descending</option>
+      <option value="asc">Price ascending</option>
+      <option value="desc">Price Descending</option>
     </select>
   </div>
 </div>

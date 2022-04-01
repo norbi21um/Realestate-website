@@ -12,9 +12,6 @@ import java.util.List;
 @Repository
 public interface PropertyRepository extends JpaRepository<Property, Long> {
 
-    //Ehez ha hozzá írom, hogy Containing akkor az olyan, mintha SQL-ben a "like" kulcsszót használnám
-    //findByDistrictContaining
-
     //Minden ingatlan ár szerint csökkenő sorrendben
     List<Property> findAllByOrderByPriceDesc();
 
@@ -25,6 +22,16 @@ public interface PropertyRepository extends JpaRepository<Property, Long> {
 
     List<Property> findByAddressContaining(String address);
 
+    List<Property> findByAddressContainingOrderByPriceAsc(String address);
+
+    List<Property> findByAddressContainingOrderByPriceDesc(String address);
+
     @Query("select p from Property p where p.address like ?1 and p.district = ?2")
     List<Property> findByDistrictAndAddress(String address, String district);
+
+    @Query("select p from Property p where p.address like ?1 and p.district = ?2 order by p.price desc ")
+    List<Property> findByDistrictAndAddressDesc(String address, String district);
+
+    @Query("select p from Property p where p.address like ?1 and p.district = ?2 order by p.price asc ")
+    List<Property> findByDistrictAndAddressAsc(String address, String district);
 }

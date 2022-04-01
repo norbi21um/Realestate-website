@@ -23,6 +23,10 @@ public class Property {
     @Column(name = "district")
     private String district;
 
+    @ManyToOne
+    @JoinColumn(name = "district_id")
+    private District districtTest;
+
     @Column(name = "price")
     private BigDecimal price;
 

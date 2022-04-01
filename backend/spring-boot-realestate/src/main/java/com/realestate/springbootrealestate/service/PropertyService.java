@@ -59,9 +59,21 @@ public class PropertyService {
     }
 
 
-    public List<Property> getPropertiesByAddress(String district, String address){
+    public List<Property> getPropertiesByAddress(String district, String address, String sortBy){
         if(district.equals("0")){
-            return propertyRepository.findByAddressContaining(address);
+            if(sortBy.equals("asc")){
+                return propertyRepository.findByAddressContainingOrderByPriceAsc(address);
+            } else if(sortBy.equals("desc")){
+                return propertyRepository.findByAddressContainingOrderByPriceDesc(address);
+            } else {
+                return propertyRepository.findByAddressContaining(address);
+            }
+        } else if(sortBy.equals("asc")){
+            String addressToUseInLikeOperation = "%" + address +"%";
+            return propertyRepository.findByDistrictAndAddressAsc(addressToUseInLikeOperation, district);
+        } else if(sortBy.equals("desc")){
+            String addressToUseInLikeOperation = "%" + address +"%";
+            return propertyRepository.findByDistrictAndAddressDesc(addressToUseInLikeOperation, district);
         } else {
             String addressToUseInLikeOperation = "%" + address +"%";
             return propertyRepository.findByDistrictAndAddress(addressToUseInLikeOperation, district);

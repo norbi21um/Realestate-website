@@ -12,8 +12,12 @@ export class PropertyService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getPropertyList(): Observable<Property[]> {
-    return this.getProperties(this.baseUrl);
+  /**
+   * Általános ingatlan listázás
+   */
+  getPropertyList(sortBy: string): Observable<Property[]> {
+    const searchUrl = `${this.baseUrl}?sortBy=${sortBy}`;
+    return this.getProperties(searchUrl);
   }
 
   /**
@@ -21,13 +25,17 @@ export class PropertyService {
    */
   searchProperties(
     theKeyword: string,
-    theDistrict: string
+    theDistrict: string,
+    sortBy: string
   ): Observable<Property[]> {
-    const searchUrl = `${this.baseUrl}/searchByKeyword?district=${theDistrict}&address=${theKeyword}`;
+    const searchUrl = `${this.baseUrl}/searchByKeyword?district=${theDistrict}&address=${theKeyword}&sortBy=${sortBy}`;
 
     return this.getProperties(searchUrl);
   }
 
+  /**
+   * Ingatlan ajánlások listázása
+   */
   getRecommendedProperties(theDistrict: string): Observable<Property[]> {
     const searchUrl = `${this.baseUrl}/recommendation?district=${theDistrict}`;
 

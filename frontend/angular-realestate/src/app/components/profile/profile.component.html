@@ -70,7 +70,7 @@
         </div>
       </div>
 
-      <!--Social links-->
+      <!--Social links
       <div class="card mb-4 mb-lg-0">
         <div class="card-body p-0">
           <ul class="list-group list-group-flush rounded-3">
@@ -106,7 +106,7 @@
             </li>
           </ul>
         </div>
-      </div>
+      </div>-->
     </div>
     <!--Jobb oldal-->
     <div class="col-lg-8">
@@ -197,17 +197,17 @@
             <thead>
               <tr>
                 <th scope="col"></th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
+                <th scope="col">Address</th>
+                <th scope="col">Area</th>
+                <th scope="col">Price</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let tempProperty of user.properties">
                 <th scope="row">1</th>
                 <td>{{ tempProperty.address }}</td>
-                <td>Otto</td>
-                <td>@mdo</td>
+                <td>{{ tempProperty.area }} &#x33A1;</td>
+                <td>{{ tempProperty.price | currency: "FT" }}</td>
               </tr>
             </tbody>
           </table>
