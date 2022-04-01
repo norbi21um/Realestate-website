@@ -11,6 +11,11 @@ import { PropertyService } from 'src/app/services/property.service';
 export class PropertyListComponent implements OnInit {
   // districtId:number;
 
+  //Pagination
+  thePageNumber: number = 1;
+  thePageSize: number = 10;
+  theTotalElements: number = 60;
+
   searchMode: boolean;
 
   districtMode: boolean;

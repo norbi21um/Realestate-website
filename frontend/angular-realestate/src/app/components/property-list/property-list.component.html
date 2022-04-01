@@ -15,10 +15,10 @@
   </div>
 </header>
 <div class="container px-lg-5 mt-4 align-items-end">
-  <div class="d-flex flex-row justify-content-end p-1">
+  <div class="d-flex flex-row justify-content-end p-1" style="gap: 10px">
     <select
       #sortInput
-      class="form-select"
+      class="form-select mr-5"
       aria-label="Default select example"
       style="width: 200px"
       (change)="sortProperties(sortInput.value)"
@@ -26,6 +26,18 @@
       <option selected>Sort by</option>
       <option value="asc">Price ascending</option>
       <option value="desc">Price Descending</option>
+    </select>
+
+    <select
+      class="form-select"
+      aria-label="Default select example"
+      style="width: 150px"
+    >
+      <option selected>Page size</option>
+      <option value="5">5</option>
+      <option value="10">10</option>
+      <option value="5">30</option>
+      <option value="10">50</option>
     </select>
   </div>
 </div>
@@ -75,6 +87,29 @@
     </div>
 
     <!-- if there are no properties to display-->
+
+    <!-- Pagination -->
+
+    <div class="footer-pagination" *ngIf="properties?.length > 0">
+      <div class="row">
+        <div class="col-md-6"></div>
+
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-9">
+              <ngb-pagination
+                [(page)]="thePageNumber"
+                [pageSize]="thePageSize"
+                [collectionSize]="theTotalElements"
+                (pageChange)="listProperties()"
+                size="lg"
+              >
+              </ngb-pagination>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div
       *ngIf="properties?.length == 0"
