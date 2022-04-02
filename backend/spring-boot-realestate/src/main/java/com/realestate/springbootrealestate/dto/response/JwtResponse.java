@@ -5,6 +5,9 @@ import lombok.Setter;
 
 import java.util.List;
 
+/**
+ * DTO for sharing the jwt token and basic user data after upon logging in
+ */
 @Getter
 @Setter
 public class JwtResponse {

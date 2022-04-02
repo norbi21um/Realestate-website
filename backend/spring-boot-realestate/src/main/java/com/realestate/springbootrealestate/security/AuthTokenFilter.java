@@ -16,12 +16,32 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+
+/**
+ * AuthTokenFilter that extends OncePerRequestFilter
+ */
 public class AuthTokenFilter extends OncePerRequestFilter {
+
     @Autowired
     private JwtUtils jwtUtils;
+
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
+
     private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
+
+    /**
+     * Get JWT from the Authorization header (by removing Bearer prefix)
+     * If the request has JWT, validates it, parses username from it
+     * From the username, it gets UserDetails to create an Authentication object
+     * Sets the current UserDetails in SecurityContext using setAuthentication(authentication) method.
+     * @param request HttpServletRequest
+     * @param response HttpServletResponse
+     * @param filterChain FilterChain
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -40,6 +60,12 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         }
         filterChain.doFilter(request, response);
     }
+
+    /**
+     * Gets JWT from the Authorization header by removing Bearer prefix
+     * @param request HttpServletRequest
+     * @return JWT token
+     */
     private String parseJwt(HttpServletRequest request) {
         String headerAuth = request.getHeader("Authorization");
         if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {

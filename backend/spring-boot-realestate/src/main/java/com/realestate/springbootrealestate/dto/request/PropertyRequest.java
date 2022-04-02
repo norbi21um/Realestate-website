@@ -6,6 +6,9 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
+/**
+ * DTO for property creation
+ */
 @Getter
 @Setter
 @AllArgsConstructor

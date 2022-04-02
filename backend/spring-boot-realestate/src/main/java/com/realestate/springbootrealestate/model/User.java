@@ -12,9 +12,11 @@ import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * User JPA Entity
+ */
 @Entity
 @Table(name = "user")
-//@Data annotáció bugos a ManyToOne kapcsolatnál Lomboknál, így helyette ilyenkor Getter, Setter annotáció ajánlott
 @Getter
 @Setter
 public class User {

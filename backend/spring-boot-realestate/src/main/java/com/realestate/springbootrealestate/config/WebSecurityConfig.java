@@ -3,6 +3,7 @@ package com.realestate.springbootrealestate.config;
 import com.realestate.springbootrealestate.security.AuthEntryPointJwt;
 import com.realestate.springbootrealestate.security.AuthTokenFilter;
 import com.realestate.springbootrealestate.service.UserDetailsServiceImpl;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,35 +21,47 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@AllArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    UserDetailsServiceImpl userDetailsService;
-    @Autowired
-    private AuthEntryPointJwt unauthorizedHandler;
+
+    final UserDetailsServiceImpl userDetailsService;
+    private final AuthEntryPointJwt unauthorizedHandler;
+
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
         return new AuthTokenFilter();
     }
+
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
+
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+
+    /**
+     * Password encoder for the
+     * @return password encoder that uses BCrypt strong hashing fuction
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    /*
-    * Ezt: .antMatchers("/api/properties/**").permitAll()
-    * erre: .antMatchers("/api/**").permitAll()
-    * lecseréltem ideiglenesen, hogy a USER API-t is engedje használni.
-    * */
-
+    /**
+     * Overrides the configure method form WebSecurityConfigurerAdapter interface
+     * It tells how to configure cors and csrf,
+     * when we want to require all users to be authenticated or not,
+     * which filter (AuthTokenFilter) and when we want it to work
+     * (filter before UsernamePasswordAuthenticationFilter),
+     * which Exception Handler is chosen (AuthEntryPointJwt).
+     * @param http HttpSecurity
+     * @throws Exception
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()

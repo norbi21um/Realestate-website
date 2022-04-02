@@ -7,6 +7,9 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
+/**
+ * Property JPA Entity
+ */
 @Entity
 @Table(name = "property")
 @Data

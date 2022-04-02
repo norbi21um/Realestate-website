@@ -9,13 +9,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+/**
+ * Property JPA repository
+ */
 @Repository
 public interface PropertyRepository extends JpaRepository<Property, Long> {
 
-    //Minden ingatlan ár szerint csökkenő sorrendben
+    /**
+     * Selects all the properties
+     * returns them in descending order based on the price
+     * @return list of properties
+     */
     List<Property> findAllByOrderByPriceDesc();
 
-    //Minden ingatlan ár szerint növekvő sorrendben
+    /**
+     * Selects all the properties
+     * returns them in ascending order based on the price
+     * @return list of properties
+     */
     List<Property> findAllByOrderByPriceAsc();
 
     List<Property> findByDistrict(String district);
@@ -26,12 +37,35 @@ public interface PropertyRepository extends JpaRepository<Property, Long> {
 
     List<Property> findByAddressContainingOrderByPriceDesc(String address);
 
+    /**
+     * Select all the properties that are in the given district
+     * and their addresses contain the address keyword
+     * @param address address keyword
+     * @param district district
+     * @return list of properties
+     */
     @Query("select p from Property p where p.address like ?1 and p.district = ?2")
     List<Property> findByDistrictAndAddress(String address, String district);
 
+    /**
+     * Select all the properties that are in the given district
+     * and their addresses contain the address keyword
+     * Returns them in descending order based on the price
+     * @param address address keyword
+     * @param district district
+     * @return list of properties
+     */
     @Query("select p from Property p where p.address like ?1 and p.district = ?2 order by p.price desc ")
     List<Property> findByDistrictAndAddressDesc(String address, String district);
 
+    /**
+     * Select all the properties that are in the given district
+     * and their addresses contain the address keyword
+     * Returns them in ascending order based on the price
+     * @param address address keyword
+     * @param district district
+     * @return list of properties
+     */
     @Query("select p from Property p where p.address like ?1 and p.district = ?2 order by p.price asc ")
     List<Property> findByDistrictAndAddressAsc(String address, String district);
 }

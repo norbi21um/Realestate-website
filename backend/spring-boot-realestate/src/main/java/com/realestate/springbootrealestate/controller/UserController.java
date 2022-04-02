@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * User contoller
+ */
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api")
@@ -28,7 +31,11 @@ public class UserController {
     private final UserService userService;
     private final UserDetailsServiceImpl userDetailsService;
 
-
+    /**
+     * Recovers the user based on the security context,
+     * then returns a UserResponse object build from the user.
+     * @return UserResponse
+     */
     @GetMapping(value = "/user")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public UserResponse findById() {
@@ -40,6 +47,11 @@ public class UserController {
         return userService.getUserById(userDetails.getId());
     }
 
+    /**
+     * Recovers the user based on the security context,
+     * then deletes the user and returns a message in the ResponseEnity body
+     * @return ResponseEntity with MessageResponse
+     */
     @DeleteMapping(value = "/deleteUser")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<MessageResponse> deleteUser() {
@@ -60,6 +72,10 @@ public class UserController {
         }
     }
 
-    
+    @PutMapping(value = "/updateUser")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    public void updateUser(){
+
+    }
 
 }

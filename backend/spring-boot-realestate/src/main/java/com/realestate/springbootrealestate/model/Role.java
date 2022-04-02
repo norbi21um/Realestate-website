@@ -6,6 +6,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+/**
+ * Role JPA Entity
+ */
 @Entity
 @Table(name = "roles")
 @Getter

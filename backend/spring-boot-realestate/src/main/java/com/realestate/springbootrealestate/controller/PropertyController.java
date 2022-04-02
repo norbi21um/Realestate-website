@@ -4,19 +4,19 @@ import com.realestate.springbootrealestate.dto.request.PropertyRequest;
 import com.realestate.springbootrealestate.dto.response.MessageResponse;
 import com.realestate.springbootrealestate.model.Property;
 import com.realestate.springbootrealestate.service.PropertyService;
-import com.realestate.springbootrealestate.service.UserDetailsServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * Porperty controller
+ */
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/properties")
@@ -25,7 +25,7 @@ public class PropertyController {
 
     private final PropertyService propertyService;
 
-    /***
+    /**
      * Returns the property with matching id
      * @param id property id
      * @return Property
@@ -35,7 +35,7 @@ public class PropertyController {
         return propertyService.getPropertyById(id);
     }
 
-    /***
+    /**
      * Deletes the requested property
      * Requires authorization
      * Accessible by USER, MODERATOR and ADMIN
@@ -58,7 +58,7 @@ public class PropertyController {
     }
 
 
-    /***
+    /**
      * Returns the filtered list of properties the requested order
      * @param district district
      * @param address address keyword
@@ -74,7 +74,7 @@ public class PropertyController {
         return response;
     }
 
-    /***
+    /**
      * Get method that gives recommendations for the viewed property in the details page
      * @param district disctict
      * @return Properties inserted in a map
@@ -86,7 +86,7 @@ public class PropertyController {
         return response;
     }
 
-    /***
+    /**
      * Get method for returning all the properties
      * @param sort either ascending or descending order
      * @return Properties inserted in a map
@@ -104,7 +104,7 @@ public class PropertyController {
         return response;
     }
 
-    /***
+    /**
      * Post method for creating a new property
      * Requires authorization
      * Accessible by USER, MODERATOR and ADMIN

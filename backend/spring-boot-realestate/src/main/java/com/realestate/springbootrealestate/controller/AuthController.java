@@ -17,7 +17,7 @@ import com.realestate.springbootrealestate.repository.RoleRepository;
 import com.realestate.springbootrealestate.repository.UserRepository;
 import com.realestate.springbootrealestate.security.JwtUtils;
 import com.realestate.springbootrealestate.service.UserDetailsImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -30,25 +30,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Authentication controller
+ */
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
+@AllArgsConstructor
 @RequestMapping("/api/auth")
 public class AuthController {
-    @Autowired
-    AuthenticationManager authenticationManager;
+
+    private final AuthenticationManager authenticationManager;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder encoder;
+    private final JwtUtils jwtUtils;
 
     /**
-     * Kell külön UserService és RoleService, mert ez így nem szép
-     **/
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    RoleRepository roleRepository;
-    @Autowired
-    PasswordEncoder encoder;
-    @Autowired
-    JwtUtils jwtUtils;
-
+     * Authenticates the user
+     * Updates the Security context using Authentication
+     * Generates a JWT token
+     * gets UserDetails from Authentication object
+     * @param loginRequest LoginRequest dto that contains the username and password
+     * @return JwtResponse
+     */
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
@@ -69,6 +73,13 @@ public class AuthController {
     }
 
 
+    /**
+     * Checks whether the username or email is already in use
+     * creates new User with ROLE_USER if not specifying role
+     * saved the User to the database using UserRepository
+     * @param signUpRequest
+     * @return
+     */
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {

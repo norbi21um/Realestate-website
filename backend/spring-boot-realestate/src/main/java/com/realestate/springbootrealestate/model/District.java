@@ -6,6 +6,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Set;
 
+/**
+ * District JPA Entity
+ */
 @Entity
 @Setter
 @Getter

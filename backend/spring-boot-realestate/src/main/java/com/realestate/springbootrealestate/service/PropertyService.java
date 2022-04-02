@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Property service
+ */
 @Service
 @AllArgsConstructor
 public class PropertyService {
@@ -20,7 +23,7 @@ public class PropertyService {
     private final PropertyRepository propertyRepository;
     private final UserRepository userRepository;
 
-    /***
+    /**
      * Finds the user, based on the id provided by the property item.
      * If the user exists, the function creates a new property and saves it to the database
      * if the user does not exist it return null.
@@ -50,7 +53,7 @@ public class PropertyService {
         return null;
     }
 
-    /***
+    /**
      * Returns every property from the database ether in an ascending order or a descending order
      * @param ascend Flag for ascending order
      * @param descend Flag for descending order
@@ -65,7 +68,7 @@ public class PropertyService {
         return propertyRepository.findAll();
     }
 
-    /***
+    /**
      * Returns the property with matching id if it exits in the databse
      * else it throws an exception
      * @param id property id
@@ -76,7 +79,7 @@ public class PropertyService {
     }
 
 
-    /***
+    /**
      * Retrieves properties base on their districts, addresses and sorts them.
      * @param district district
      * @param address Keyword in the address
@@ -84,7 +87,7 @@ public class PropertyService {
      * @return properties
      */
     public List<Property> getSearchedProperties(String district, String address, String sortBy){
-        if(district.equals("0")){
+        if(district.equals("0")){ // district == 0 means, that the user did not select any district
             if(sortBy.equals("asc")){
                 return propertyRepository.findByAddressContainingOrderByPriceAsc(address);
             } else if(sortBy.equals("desc")){
@@ -106,7 +109,7 @@ public class PropertyService {
 
     }
 
-    /***
+    /**
      * Creates suggestions based on the district of the viewed property
      * Retrieves all the properties with the same district as the view property
      * and selects 4 properties in a random order
@@ -117,7 +120,7 @@ public class PropertyService {
         return getRandomElements(propertyRepository.findByDistrict(disctrict), 4);
     }
 
-    /***
+    /**
      * Randomly selects "totalItems" numeber of properties for a list of properties
      * @param list list of properties
      * @param totalItems how many properties to choose
@@ -147,6 +150,10 @@ public class PropertyService {
         return newList;
     }
 
+    /**
+     * Deletes the property with the given id from the database
+     * @param id property id
+     */
     public void deletePropertyById(Long id) {
         propertyRepository.deleteById(id);
     }

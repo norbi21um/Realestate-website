@@ -6,6 +6,9 @@ import lombok.Setter;
 import javax.validation.constraints.*;
 import java.util.Set;
 
+/**
+ * DTO for sign up request
+ */
 @Getter
 @Setter
 public class SignupRequest {

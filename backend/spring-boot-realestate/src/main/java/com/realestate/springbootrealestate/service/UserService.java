@@ -14,6 +14,9 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * User service
+ */
 @Service
 @AllArgsConstructor
 public class UserService {
@@ -21,7 +24,7 @@ public class UserService {
     private final UserRepository userRepository;
 
 
-    /***
+    /**
      * Gets user by its id from the database
      * @param id id
      * @return user
@@ -30,7 +33,7 @@ public class UserService {
         return convertToUserResponse(userRepository.findById(id).orElse(null), id);
     }
 
-    /***
+    /**
      * Builds a UserResponse data transfer object from a User
      * @param user user
      * @param id id
@@ -54,6 +57,10 @@ public class UserService {
         return userResponse;
     }
 
+    /**
+     * Deletes the user with the given id from the database
+     * @param id user id
+     */
     public void deleteUserById(Long id) {
         userRepository.deleteById(id);
     }
