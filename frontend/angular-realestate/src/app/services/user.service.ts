@@ -26,6 +26,19 @@ export class UserService {
 
     return this.httpClient.get<GetResponseUser>(userUrl);
   }
+
+  deleteUserById(id: number) {
+    const deleteUserUrl = `http://localhost:8080/api/deleteUser?id=${id}`;
+    this.httpClient.delete(deleteUserUrl).subscribe({
+      next: (data) => {
+        //this.status = 'Delete successful';
+      },
+      error: (error) => {
+        //this.errorMessage = error.message;
+        console.error('There was an error!', error);
+      },
+    });
+  }
 }
 
 ///EEEEEZZZZZ NAGYON RONDA, ITT KI KELL VALAMIT TALÁLNI!!!!

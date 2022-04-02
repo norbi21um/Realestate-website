@@ -29,14 +29,6 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  /* Ez a lista nélküli user lekérdezést
-  getUserData() {
-    const user = this.token.getUser();
-    this.userService.getUser(user.id).subscribe((data) => {
-      this.user = data;
-    });
-  }*/
-
   getUserData() {
     const user = this.token.getUser();
     this.userService.getUserTest(user.id).subscribe((data) => {
@@ -56,10 +48,11 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  deleteAccount(id: number) {
+  deleteAccount() {
     if (confirm('Are you sure you want to delete your account?')) {
-      //this.propertyService.deletePropertyById(id);
-      this.logout;
+      const user = this.token.getUser();
+      this.userService.deleteUserById(user.id);
+      this.logout();
     }
   }
   logout() {
