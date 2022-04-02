@@ -57,6 +57,19 @@ export class PropertyService {
 
     return this.httpClient.get<Property>(propertyUrl);
   }
+
+  deletePropertyById(id: number) {
+    const propertyUrl = `${this.baseUrl}/delete?id=${id}`;
+    this.httpClient.delete(propertyUrl).subscribe({
+      next: (data) => {
+        //this.status = 'Delete successful';
+      },
+      error: (error) => {
+        //this.errorMessage = error.message;
+        console.error('There was an error!', error);
+      },
+    });
+  }
 }
 
 interface GetResponse {

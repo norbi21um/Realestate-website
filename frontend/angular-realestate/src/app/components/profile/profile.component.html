@@ -200,14 +200,32 @@
                 <th scope="col">Address</th>
                 <th scope="col">Area</th>
                 <th scope="col">Price</th>
+                <th scope="col"></th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let tempProperty of user.properties">
-                <th scope="row">1</th>
-                <td>{{ tempProperty.address }}</td>
-                <td>{{ tempProperty.area }} &#x33A1;</td>
-                <td>{{ tempProperty.price | currency: "FT" }}</td>
+                <th class="align-middle" scope="row">1</th>
+                <td class="align-middle">
+                  <a
+                    routerLink="/properties/{{ tempProperty.id }}"
+                    class="nav-link active"
+                    aria-current="page"
+                    >{{ tempProperty.address }}</a
+                  >
+                </td>
+                <td class="align-middle">{{ tempProperty.area }} &#x33A1;</td>
+                <td class="align-middle">
+                  {{ tempProperty.price | currency: "FT" }}
+                </td>
+                <td class="align-middle">
+                  <img
+                    src="../assets/images/delete.png"
+                    alt="delete"
+                    width="20px"
+                    (click)="deleteProperty(tempProperty.id)"
+                  />
+                </td>
               </tr>
             </tbody>
           </table>
@@ -419,7 +437,9 @@
       <h5 class="card-title">
         Please note that the deletion of your account is irreversable.
       </h5>
-      <a href="#" class="btn btn-danger">Delete Account</a>
+      <a (click)="deleteAccount(user.id)" class="btn btn-danger"
+        >Delete Account</a
+      >
     </div>
   </div>
 

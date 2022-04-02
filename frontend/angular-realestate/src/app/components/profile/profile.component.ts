@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Property } from 'src/app/common/property';
 import { User } from 'src/app/common/user';
+import { PropertyService } from 'src/app/services/property.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UserService } from 'src/app/services/user.service';
 @Component({
@@ -17,7 +18,8 @@ export class ProfileComponent implements OnInit {
   constructor(
     private token: TokenStorageService,
     private userService: UserService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private propertyService: PropertyService
   ) {}
 
   ngOnInit() {
@@ -45,5 +47,23 @@ export class ProfileComponent implements OnInit {
       this.user.username = data.username;
       this.user.properties = data.proterties;
     });
+  }
+
+  deleteProperty(id: number) {
+    if (confirm('Are you sure you want to delete this property?')) {
+      this.propertyService.deletePropertyById(id);
+      this.getUserData();
+    }
+  }
+
+  deleteAccount(id: number) {
+    if (confirm('Are you sure you want to delete your account?')) {
+      //this.propertyService.deletePropertyById(id);
+      this.logout;
+    }
+  }
+  logout() {
+    this.token.signOut();
+    window.location.reload();
   }
 }
