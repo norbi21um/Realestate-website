@@ -1,11 +1,15 @@
 package com.realestate.springbootrealestate.controller;
 
 import com.realestate.springbootrealestate.dto.request.PropertyRequest;
+import com.realestate.springbootrealestate.dto.response.MessageResponse;
 import com.realestate.springbootrealestate.model.Property;
 import com.realestate.springbootrealestate.service.PropertyService;
+import com.realestate.springbootrealestate.service.UserDetailsServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -29,6 +33,28 @@ public class PropertyController {
     @GetMapping(value = "/{id}")
     public Property findById(@PathVariable("id") Long id) {
         return propertyService.getPropertyById(id);
+    }
+
+    /***
+     * Deletes the requested property
+     * Requires authorization
+     * Accessible by USER, MODERATOR and ADMIN
+     * @param id property id
+     * @return message
+     */
+    @DeleteMapping(value = "/delete")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    public ResponseEntity<MessageResponse> deleteProperty(@RequestParam(name = "id") Long id) {
+        String message = "";
+        try {
+            propertyService.deletePropertyById(id);
+
+            message = "Deletion complited";
+            return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(message));
+        } catch (Exception e) {
+            message = "Could not delete property";
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new MessageResponse(message));
+        }
     }
 
 
@@ -80,7 +106,7 @@ public class PropertyController {
 
     /***
      * Post method for creating a new property
-     * Required authorization
+     * Requires authorization
      * Accessible by USER, MODERATOR and ADMIN
      * @param propertyItem PropertyRequest, property dto
      * @return Property

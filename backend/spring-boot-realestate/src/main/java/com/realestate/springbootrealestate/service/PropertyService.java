@@ -147,4 +147,7 @@ public class PropertyService {
         return newList;
     }
 
+    public void deletePropertyById(Long id) {
+        propertyRepository.deleteById(id);
+    }
 }
