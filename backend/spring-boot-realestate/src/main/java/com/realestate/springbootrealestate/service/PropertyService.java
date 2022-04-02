@@ -20,7 +20,13 @@ public class PropertyService {
     private final PropertyRepository propertyRepository;
     private final UserRepository userRepository;
 
-    /** Új ingatlan létrehozása **/
+    /***
+     * Finds the user, based on the id provided by the property item.
+     * If the user exists, the function creates a new property and saves it to the database
+     * if the user does not exist it return null.
+     * @param propertyItem Property tranfer data object
+     * @return null
+     */
     public Property createNewProperty(PropertyRequest propertyItem) {
         Long userId = propertyItem.getUserId();
 
@@ -44,7 +50,12 @@ public class PropertyService {
         return null;
     }
 
-    /** Minden ingatlan lekérdezése **/
+    /***
+     * Returns every property from the database ether in an ascending order or a descending order
+     * @param ascend Flag for ascending order
+     * @param descend Flag for descending order
+     * @return properties
+     */
     public List<Property> getAllProperties(boolean ascend, boolean descend){
         if(ascend){
             return propertyRepository.findAllByOrderByPriceAsc();
@@ -54,12 +65,25 @@ public class PropertyService {
         return propertyRepository.findAll();
     }
 
+    /***
+     * Returns the property with matching id if it exits in the databse
+     * else it throws an exception
+     * @param id property id
+     * @return property
+     */
     public Property getPropertyById(Long id) {
         return propertyRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Property not foudn with the id of: " + id));
     }
 
 
-    public List<Property> getPropertiesByAddress(String district, String address, String sortBy){
+    /***
+     * Retrieves properties base on their districts, addresses and sorts them.
+     * @param district district
+     * @param address Keyword in the address
+     * @param sortBy either ascending or descending order
+     * @return properties
+     */
+    public List<Property> getSearchedProperties(String district, String address, String sortBy){
         if(district.equals("0")){
             if(sortBy.equals("asc")){
                 return propertyRepository.findByAddressContainingOrderByPriceAsc(address);
@@ -82,11 +106,23 @@ public class PropertyService {
 
     }
 
-    //Returns a random list of properties from a given district
+    /***
+     * Creates suggestions based on the district of the viewed property
+     * Retrieves all the properties with the same district as the view property
+     * and selects 4 properties in a random order
+     * @param disctrict district
+     * @return properties
+     */
     public List<Property> getRandomPropertiesByDistrict(String disctrict){
         return getRandomElements(propertyRepository.findByDistrict(disctrict), 4);
     }
 
+    /***
+     * Randomly selects "totalItems" numeber of properties for a list of properties
+     * @param list list of properties
+     * @param totalItems how many properties to choose
+     * @return properties
+     */
     private List<Property> getRandomElements(List<Property> list, int totalItems) {
         Random rand = new Random();
 

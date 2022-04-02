@@ -21,11 +21,22 @@ public class UserService {
     private final UserRepository userRepository;
 
 
+    /***
+     * Gets user by its id from the database
+     * @param id id
+     * @return user
+     */
     public UserResponse getUserById(Long id){
         return convertToUserResponse(userRepository.findById(id).orElse(null), id);
     }
 
-    public UserResponse convertToUserResponse(User user, Long id){
+    /***
+     * Builds a UserResponse data transfer object from a User
+     * @param user user
+     * @param id id
+     * @return UserResponse
+     */
+    private UserResponse convertToUserResponse(User user, Long id){
         if(user == null){
             throw new EntityNotFoundException("Property not foudn with the id of: " + id);
         }
