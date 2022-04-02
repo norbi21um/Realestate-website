@@ -44,14 +44,15 @@ export class ProfileComponent implements OnInit {
   deleteProperty(id: number) {
     if (confirm('Are you sure you want to delete this property?')) {
       this.propertyService.deletePropertyById(id);
-      this.getUserData();
+      //TODO: Ez nem frissíti az adatokat, ami gáz
+      //this.getUserData();
+      window.location.reload(); //Ez egy rossz, de ideiglenes megoldás
     }
   }
 
   deleteAccount() {
     if (confirm('Are you sure you want to delete your account?')) {
-      const user = this.token.getUser();
-      this.userService.deleteUserById(user.id);
+      this.userService.deleteUserById();
       this.logout();
     }
   }

@@ -24,11 +24,11 @@ export class UserService {
     // URL építés a user id alapján
     const userUrl = `${this.baseUrl}?id=${theUserId}`;
 
-    return this.httpClient.get<GetResponseUser>(userUrl);
+    return this.httpClient.get<GetResponseUser>(this.baseUrl);
   }
 
-  deleteUserById(id: number) {
-    const deleteUserUrl = `http://localhost:8080/api/deleteUser?id=${id}`;
+  deleteUserById() {
+    const deleteUserUrl = `http://localhost:8080/api/deleteUser`;
     this.httpClient.delete(deleteUserUrl).subscribe({
       next: (data) => {
         //this.status = 'Delete successful';

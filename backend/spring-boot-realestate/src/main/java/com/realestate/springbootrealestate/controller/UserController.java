@@ -4,11 +4,17 @@ import com.realestate.springbootrealestate.dto.response.MessageResponse;
 import com.realestate.springbootrealestate.dto.response.UserResponse;
 import com.realestate.springbootrealestate.model.Property;
 import com.realestate.springbootrealestate.model.User;
+import com.realestate.springbootrealestate.repository.UserRepository;
+import com.realestate.springbootrealestate.service.UserDetailsImpl;
+import com.realestate.springbootrealestate.service.UserDetailsServiceImpl;
 import com.realestate.springbootrealestate.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,20 +26,31 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final UserDetailsServiceImpl userDetailsService;
 
-    //Csak tesztelés
-    @GetMapping(value = "/{id}")
-    //@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-    public UserResponse findById(@RequestParam(name = "id") Long id) {
-        return userService.getUserById(id);
+
+    @GetMapping(value = "/user")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    public UserResponse findById() {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.loadUserByUsername(currentPrincipalName);
+
+        return userService.getUserById(userDetails.getId());
     }
 
     @DeleteMapping(value = "/deleteUser")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-    public ResponseEntity<MessageResponse> deleteUser(@RequestParam(name = "id") Long id) {
+    public ResponseEntity<MessageResponse> deleteUser() {
         String message = "";
         try {
-            userService.deleteUserById(id);
+
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String currentPrincipalName = authentication.getName();
+            UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.loadUserByUsername(currentPrincipalName);
+
+            userService.deleteUserById(userDetails.getId());
 
             message = "Deletion complited";
             return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(message));
@@ -42,5 +59,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new MessageResponse(message));
         }
     }
+
+    
 
 }
