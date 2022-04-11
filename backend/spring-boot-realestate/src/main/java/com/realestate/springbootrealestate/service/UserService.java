@@ -7,7 +7,9 @@ import com.realestate.springbootrealestate.model.User;
 import com.realestate.springbootrealestate.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.HashSet;
@@ -22,6 +24,7 @@ import java.util.Set;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder encoder;
 
 
     /**
@@ -63,5 +66,39 @@ public class UserService {
      */
     public void deleteUserById(Long id) {
         userRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void updateUserPassword(Long id, String oldPassword,String newPassword) {
+        User user = userRepository.findById(id).orElse(null);
+
+        if(user != null){
+            //True if the current password matches the given string
+            if(encoder.matches(oldPassword, user.getPassword())){
+                user.setPassword(encoder.encode(newPassword));
+                userRepository.save(user);
+            } else{
+                System.out.println("Nem egyezik a két password");
+                //Ha nem egyezik a régi pass word, majd valami exception-t dob
+            }
+        }
+
+    }
+
+    @Transactional
+    public User updateUsername(Long id, String newUsername,String password) {
+        User user = userRepository.findById(id).orElse(null);
+
+        if(user != null){
+            //True if the current password matches the given string
+            if(encoder.matches(password, user.getPassword())){
+                user.setUsername(newUsername);
+                userRepository.save(user);
+            } else{
+                System.out.println("Nem egyezik a két password");
+                //Ha nem egyezik a régi pass word, majd valami exception-t dob
+            }
+        }
+        return user;
     }
 }

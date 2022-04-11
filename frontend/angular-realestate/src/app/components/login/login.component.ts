@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
   isLoginFailed = false;
   errorMessage = '';
   roles: string[] = [];
+  username: string = '';
   //tmpToken: string = '';
   constructor(
     private authService: AuthService,
@@ -29,6 +30,7 @@ export class LoginComponent implements OnInit {
     if (this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
       this.roles = this.tokenStorage.getUser().roles;
+      this.username = this.tokenStorage.getUser().username;
     }
     //this.tmpToken = window.sessionStorage.getItem('auth-token');
   }

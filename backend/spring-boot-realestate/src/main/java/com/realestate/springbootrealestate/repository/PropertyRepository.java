@@ -1,11 +1,9 @@
 package com.realestate.springbootrealestate.repository;
 
 import com.realestate.springbootrealestate.model.Property;
-import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -29,12 +27,34 @@ public interface PropertyRepository extends JpaRepository<Property, Long> {
      */
     List<Property> findAllByOrderByPriceAsc();
 
+    /**
+     * Select all the properties that are in the given district
+     * @param district district
+     * @return list of properties
+     */
     List<Property> findByDistrict(String district);
 
+    /**
+     * Select all the properties where the address contains the given keyword
+     * @param address address keyword
+     * @return list of properties
+     */
     List<Property> findByAddressContaining(String address);
 
+    /**
+     * Select all the properties where the address contains the given keyword
+     * Returns them in ascending order based on the Price
+     * @param address address keyword
+     * @return list of properties
+     */
     List<Property> findByAddressContainingOrderByPriceAsc(String address);
 
+    /**
+     * Select all the properties where the address contains the given keyword
+     * Returns them in descending order based on the Price
+     * @param address address keyword
+     * @return list of properties
+     */
     List<Property> findByAddressContainingOrderByPriceDesc(String address);
 
     /**

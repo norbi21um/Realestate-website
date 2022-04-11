@@ -72,9 +72,32 @@ public class UserController {
         }
     }
 
-    @PutMapping(value = "/updateUser")
+    //http://localhost:8080/api/updateUser?oldaPassword=password1&newPassword=password
+    //Ezzel az URL-el működik
+    @PutMapping(value = "/updateUserPassword")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-    public void updateUser(){
+    public void updateUserPassword(@RequestParam(name = "oldaPassword") String oldaPassword,
+                                   @RequestParam(name = "newPassword") String newPassword){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.loadUserByUsername(currentPrincipalName);
+
+        userService.updateUserPassword(userDetails.getId(), oldaPassword, newPassword);
+
+    }
+
+    //http://localhost:8080/api/updateUsename?newUsername=valami&password=password
+    //Ezzel az URL-el működik
+    //Miután megváltozik a username, már nem jó a mostani JWT token, így újra be kell jelentkezni
+    @PutMapping(value = "/updateUsername")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    public User updateUsename(@RequestParam(name = "newUsername") String newUsername,
+                              @RequestParam(name = "password") String password){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.loadUserByUsername(currentPrincipalName);
+
+        return userService.updateUsername(userDetails.getId(), newUsername, password);
 
     }
 

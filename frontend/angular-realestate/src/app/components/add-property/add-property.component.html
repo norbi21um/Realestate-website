@@ -145,10 +145,19 @@
           aria-describedby="imageHelp"
           placeholder="Enter image url"
         />
-        <small id="imageHelp" class="form-text text-muted"
-          >Így kell valamilyen segítő szöveget írni.</small
-        >
+        <small id="imageHelp" class="form-text text-muted">
+          Így kell valamilyen segítő szöveget írni.
+        </small>
       </div>
+    </div>
+
+    <!-- Drag and -->
+    <div class="dropzone mt-3">
+      <input type="file" #fileDropRef id="fileDropRef" multiple />
+      <img src="assets/images/dnd/ic-upload-file.svg" alt="" />
+      <h3>Drag and drop your image here</h3>
+      <h3>or</h3>
+      <label for="fileDropRef">Browse for file</label>
     </div>
 
     <!-- submit button 
