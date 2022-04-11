@@ -56,6 +56,19 @@ export class ProfileComponent implements OnInit {
       this.logout();
     }
   }
+
+  changePassword(oldPassword: string, newPassword: string) {
+    console.log(`Password change: ${oldPassword} -> ${newPassword}`);
+    this.userService.changePassword(oldPassword, newPassword);
+    this.logout();
+  }
+
+  changeUsername(newUsername: string, password: string) {
+    console.log(`Username change: ${newUsername} -> ${password}`);
+    this.userService.changeUsername(newUsername, password);
+    this.logout();
+  }
+
   logout() {
     this.token.signOut();
     window.location.reload();

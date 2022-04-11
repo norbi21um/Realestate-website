@@ -76,13 +76,16 @@ public class UserController {
     //Ezzel az URL-el működik
     @PutMapping(value = "/updateUserPassword")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-    public void updateUserPassword(@RequestParam(name = "oldaPassword") String oldaPassword,
+    public User updateUserPassword(@RequestParam(name = "oldaPassword") String oldaPassword,
                                    @RequestParam(name = "newPassword") String newPassword){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.loadUserByUsername(currentPrincipalName);
 
-        userService.updateUserPassword(userDetails.getId(), oldaPassword, newPassword);
+        System.out.println(oldaPassword);
+        System.out.println(newPassword);
+
+        return userService.updateUserPassword(userDetails.getId(), oldaPassword, newPassword);
 
     }
 
@@ -96,6 +99,9 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.loadUserByUsername(currentPrincipalName);
+
+        System.out.println(newUsername);
+        System.out.println(password);
 
         return userService.updateUsername(userDetails.getId(), newUsername, password);
 

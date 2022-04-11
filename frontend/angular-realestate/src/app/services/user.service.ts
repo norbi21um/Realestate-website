@@ -39,6 +39,19 @@ export class UserService {
       },
     });
   }
+
+  changePassword(oldPsw: string, newPsw: string) {
+    console.log('eljutott a servicebe');
+    let valami;
+    const changePasswordUserUrl = `http://localhost:8080/api/updateUserPassword?oldaPassword=${oldPsw}&newPassword=${newPsw}`;
+    this.httpClient.put<User>(changePasswordUserUrl, null).subscribe();
+  }
+
+  changeUsername(newUsername: string, password: string) {
+    console.log('eljutott a servicebe');
+    const changeUsernameUserUrl = `http://localhost:8080/api/updateUsername?newUsername=${newUsername}&password=${password}`;
+    this.httpClient.put<User>(changeUsernameUserUrl, null).subscribe();
+  }
 }
 
 ///EEEEEZZZZZ NAGYON RONDA, ITT KI KELL VALAMIT TALÁLNI!!!!

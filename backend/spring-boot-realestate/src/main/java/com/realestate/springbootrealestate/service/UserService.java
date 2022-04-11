@@ -69,7 +69,7 @@ public class UserService {
     }
 
     @Transactional
-    public void updateUserPassword(Long id, String oldPassword,String newPassword) {
+    public User updateUserPassword(Long id, String oldPassword,String newPassword) {
         User user = userRepository.findById(id).orElse(null);
 
         if(user != null){
@@ -82,7 +82,7 @@ public class UserService {
                 //Ha nem egyezik a régi pass word, majd valami exception-t dob
             }
         }
-
+        return user;
     }
 
     @Transactional

@@ -243,23 +243,33 @@
                 <div class="form-group mb-3">
                   <label for="exampleInputEmail1">New Username</label>
                   <input
+                    #newUsername
                     type="email"
                     class="form-control"
                     id="exampleInputEmail1"
                     aria-describedby="emailHelp"
-                    placeholder="Enter email"
+                    placeholder="Enter new usename"
                   />
                 </div>
                 <div class="form-group mb-3">
                   <label for="exampleInputPassword1">Password</label>
                   <input
+                    #userPassword
                     type="password"
                     class="form-control"
                     id="exampleInputPassword1"
                     placeholder="Password"
                   />
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button
+                  (click)="
+                    changeUsername(newUsername.value, userPassword.value)
+                  "
+                  type="submit"
+                  class="btn btn-primary"
+                >
+                  Submit
+                </button>
               </form>
             </div>
           </div>
@@ -272,23 +282,31 @@
                 <div class="form-group mb-3">
                   <label for="exampleInputEmail1">New Password</label>
                   <input
+                    #newPassword
                     type="email"
                     class="form-control"
                     id="exampleInputEmail1"
                     aria-describedby="emailHelp"
-                    placeholder="Enter email"
+                    placeholder="Enter new password"
                   />
                 </div>
                 <div class="form-group mb-3">
                   <label for="exampleInputPassword1">Old Password</label>
                   <input
+                    #oldPassword
                     type="password"
                     class="form-control"
                     id="exampleInputPassword1"
                     placeholder="Password"
                   />
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button
+                  (click)="changePassword(oldPassword.value, newPassword.value)"
+                  type="submit"
+                  class="btn btn-primary"
+                >
+                  Submit
+                </button>
               </form>
             </div>
           </div>
