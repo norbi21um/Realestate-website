@@ -13,6 +13,8 @@ import java.util.List;
 @Repository
 public interface PropertyRepository extends JpaRepository<Property, Long> {
 
+    List<Property> findAllByOrderByNumberOfClicksDesc();
+
     /**
      * Selects all the properties
      * returns them in descending order based on the price

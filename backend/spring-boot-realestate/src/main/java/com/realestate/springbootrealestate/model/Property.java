@@ -47,6 +47,9 @@ public class Property {
     @CreationTimestamp
     private Date dateCreated;
 
+    @Column(name = "number_of_clicks")
+    private Integer numberOfClicks;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

@@ -10,4 +10,5 @@ export class Property {
   dateCreated: Date;
   user: User;
   district: string;
+  numberOfClicks: number;
 }

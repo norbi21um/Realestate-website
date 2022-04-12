@@ -7,6 +7,7 @@ import com.realestate.springbootrealestate.repository.PropertyRepository;
 import com.realestate.springbootrealestate.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
@@ -45,6 +46,7 @@ public class PropertyService {
             property.setDescription(propertyItem.getDescription());
             property.setUser(user);
             property.setDistrict(propertyItem.getDistrict());
+            property.setNumberOfClicks(0);
 
             propertyRepository.save(property);
 
@@ -59,11 +61,13 @@ public class PropertyService {
      * @param descend Flag for descending order
      * @return properties
      */
-    public List<Property> getAllProperties(boolean ascend, boolean descend){
+    public List<Property> getAllProperties(boolean ascend, boolean descend, boolean popularity){
         if(ascend){
             return propertyRepository.findAllByOrderByPriceAsc();
         } else if(descend){
             return propertyRepository.findAllByOrderByPriceDesc();
+        } else if(popularity){
+            return propertyRepository.findAllByOrderByNumberOfClicksDesc();
         }
         return propertyRepository.findAll();
     }
@@ -74,8 +78,14 @@ public class PropertyService {
      * @param id property id
      * @return property
      */
+    @Transactional
     public Property getPropertyById(Long id) {
-        return propertyRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Property not foudn with the id of: " + id));
+        Property property = propertyRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Property not foudn with the id of: " + id));
+        int clicks = property.getNumberOfClicks();
+        clicks++;
+        property.setNumberOfClicks(clicks);
+        propertyRepository.save(property);
+        return property;
     }
 
 
