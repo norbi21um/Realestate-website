@@ -65,7 +65,6 @@ public class PropertyController {
      * @param sort either ascending or descending order
      * @return Properties inserted in a map
      */
-    //TODO: sort by popularity
     @GetMapping(value = "/searchByKeyword")
     public Map<String, List<Property>> findByAddress(@RequestParam(name = "district") String district,
                                                      @RequestParam(name = "address") String address,
@@ -92,7 +91,6 @@ public class PropertyController {
      * @param sort either ascending or descending order
      * @return Properties inserted in a map
      */
-    //TODO: sort by popularity
     @RequestMapping("")
     public Map<String, List<Property>> getAllProperties(@RequestParam(name = "sortBy") String sort) {
         Map<String, List<Property>> response = new HashMap<String, List<Property>>();
