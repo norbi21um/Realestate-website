@@ -206,7 +206,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let tempProperty of user.properties">
-                <th class="align-middle" scope="row">1</th>
+                <th class="align-middle" scope="row"></th>
                 <td class="align-middle">
                   <a
                     routerLink="/properties/{{ tempProperty.id }}"
@@ -243,18 +243,21 @@
           <div class="card mb-4 mb-md-0">
             <div class="card-body">
               <p class="mb-4">
-                <span class="text-primary font-italic me-1">assigment</span>
-                Project Status
+                <span class="text-primary font-italic me-1">Popularity</span>
+                of your advertisements
               </p>
               <div *ngFor="let tempProperty of user.properties">
-                <p class="mb-1" style="font-size: 0.77rem">
-                  {{ tempProperty.address }}
+                <p class="mb-1" style="font-size: 1rem">
+                  {{ tempProperty.district }}. {{ tempProperty.address }}
                 </p>
-                <div class="progress rounded" style="height: 5px">
+                <div class="progress rounded" style="height: 10px">
                   <div
                     class="progress-bar"
                     role="progressbar"
                     style="width: 80%"
+                    style.width="{{
+                      (tempProperty.numberOfClicks / maxViews) * 100
+                    }}%"
                     aria-valuenow="80"
                     aria-valuemin="0"
                     aria-valuemax="100"

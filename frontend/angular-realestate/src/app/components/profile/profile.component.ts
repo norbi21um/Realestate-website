@@ -14,6 +14,7 @@ export class ProfileComponent implements OnInit {
   currentUser: any;
   user: User = new User();
   properties: Property[] = [];
+  maxViews: number = 0;
 
   constructor(
     private token: TokenStorageService,
@@ -38,6 +39,26 @@ export class ProfileComponent implements OnInit {
       this.user.phoneNumber = data.phoneNumber;
       this.user.username = data.username;
       this.user.properties = data.proterties;
+
+      //Max nézettség megtalálása
+      for (var val of this.user.properties) {
+        if (val.numberOfClicks > this.maxViews) {
+          this.maxViews = val.numberOfClicks;
+        }
+      }
+
+      this.user.properties.sort((n1, n2) => {
+        if (n1.numberOfClicks < n2.numberOfClicks) {
+          return 1;
+        }
+
+        if (n1.numberOfClicks > n2.numberOfClicks) {
+          return -1;
+        }
+
+        return 0;
+      });
+      console.log(this.maxViews);
     });
   }
 
