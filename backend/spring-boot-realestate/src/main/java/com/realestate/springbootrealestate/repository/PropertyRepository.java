@@ -1,6 +1,8 @@
 package com.realestate.springbootrealestate.repository;
 
 import com.realestate.springbootrealestate.model.Property;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -12,6 +14,7 @@ import java.util.List;
  */
 @Repository
 public interface PropertyRepository extends JpaRepository<Property, Long> {
+
 
     List<Property> findAllByOrderByNumberOfClicksDesc();
 
@@ -59,6 +62,8 @@ public interface PropertyRepository extends JpaRepository<Property, Long> {
      */
     List<Property> findByAddressContainingOrderByPriceDesc(String address);
 
+    List<Property> findByAddressContainingOrderByNumberOfClicksDesc(String address);
+
     /**
      * Select all the properties that are in the given district
      * and their addresses contain the address keyword
@@ -90,4 +95,7 @@ public interface PropertyRepository extends JpaRepository<Property, Long> {
      */
     @Query("select p from Property p where p.address like ?1 and p.district = ?2 order by p.price asc ")
     List<Property> findByDistrictAndAddressAsc(String address, String district);
+
+    @Query("select p from Property p where p.address like ?1 and p.district = ?2 order by p.numberOfClicks desc ")
+    List<Property> findByDistrictAndAddressPopularity(String address, String district);
 }

@@ -24,21 +24,23 @@
       (change)="sortProperties(sortInput.value)"
     >
       <option selected>Sort by</option>
-      <option value="asc">Price ascending</option>
+      <option value="asc">Price Ascending</option>
       <option value="desc">Price Descending</option>
       <option value="popularity">Popularity</option>
     </select>
 
     <select
+      #pageSizeInput
       class="form-select"
       aria-label="Default select example"
       style="width: 150px"
+      (change)="updatePageSize(pageSizeInput.value)"
     >
-      <option selected>Page size</option>
-      <option value="5">5</option>
-      <option value="10">10</option>
-      <option value="5">30</option>
-      <option value="10">50</option>
+      <option disabled>Page size</option>
+      <option>5</option>
+      <option selected="true">10</option>
+      <option>30</option>
+      <option>50</option>
     </select>
   </div>
 </div>
@@ -102,6 +104,8 @@
                 [(page)]="thePageNumber"
                 [pageSize]="thePageSize"
                 [collectionSize]="theTotalElements"
+                [maxSize]="5"
+                [boundaryLinks]="true"
                 (pageChange)="listProperties()"
                 size="lg"
               >

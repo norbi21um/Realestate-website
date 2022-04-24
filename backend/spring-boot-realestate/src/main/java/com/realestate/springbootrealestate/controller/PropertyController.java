@@ -3,13 +3,20 @@ package com.realestate.springbootrealestate.controller;
 import com.realestate.springbootrealestate.dto.request.PropertyRequest;
 import com.realestate.springbootrealestate.dto.response.MessageResponse;
 import com.realestate.springbootrealestate.model.Property;
+import com.realestate.springbootrealestate.repository.PropertyRepository;
 import com.realestate.springbootrealestate.service.PropertyService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,20 +65,13 @@ public class PropertyController {
     }
 
 
-    /**
-     * Returns the filtered list of properties the requested order
-     * @param district district
-     * @param address address keyword
-     * @param sort either ascending or descending order
-     * @return Properties inserted in a map
-     */
+
     @GetMapping(value = "/searchByKeyword")
-    public Map<String, List<Property>> findByAddress(@RequestParam(name = "district") String district,
+    public Page<Property>  findByAddress(Pageable page,
+                                                     @RequestParam(name = "district") String district,
                                                      @RequestParam(name = "address") String address,
                                                      @RequestParam(name = "sortBy") String sort) {
-        Map<String, List<Property>> response = new HashMap<String, List<Property>>();
-        response.put("properties", propertyService.getSearchedProperties(district, address, sort));
-        return response;
+        return propertyService.getSearchedProperties(page,district, address, sort);
     }
 
     /**
@@ -86,25 +86,13 @@ public class PropertyController {
         return response;
     }
 
-    /**
-     * Get method for returning all the properties
-     * @param sort either ascending or descending order
-     * @return Properties inserted in a map
-     */
+
     @RequestMapping("")
-    public Map<String, List<Property>> getAllProperties(@RequestParam(name = "sortBy") String sort) {
-        Map<String, List<Property>> response = new HashMap<String, List<Property>>();
-        if(sort.equals("asc")){
-            response.put("properties", propertyService.getAllProperties(true, false, false));
-        } else if(sort.equals("desc")){
-            response.put("properties", propertyService.getAllProperties(false, true, false));
-        } else if(sort.equals("popularity")){
-            response.put("properties", propertyService.getAllProperties(false, false, true));
-        } else {
-            response.put("properties", propertyService.getAllProperties(false, false, false));
-        }
-        return response;
+    public Page<Property> getAllProperties(Pageable page, String sortBy) {
+        return propertyService.getAllProperties(page, sortBy);
+
     }
+
 
     /**
      * Post method for creating a new property

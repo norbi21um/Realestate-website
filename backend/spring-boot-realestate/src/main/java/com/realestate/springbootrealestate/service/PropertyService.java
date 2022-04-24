@@ -6,6 +6,7 @@ import com.realestate.springbootrealestate.model.User;
 import com.realestate.springbootrealestate.repository.PropertyRepository;
 import com.realestate.springbootrealestate.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,21 +56,25 @@ public class PropertyService {
         return null;
     }
 
-    /**
-     * Returns every property from the database ether in an ascending order or a descending order
-     * @param ascend Flag for ascending order
-     * @param descend Flag for descending order
-     * @return properties
-     */
-    public List<Property> getAllProperties(boolean ascend, boolean descend, boolean popularity){
-        if(ascend){
-            return propertyRepository.findAllByOrderByPriceAsc();
-        } else if(descend){
-            return propertyRepository.findAllByOrderByPriceDesc();
-        } else if(popularity){
-            return propertyRepository.findAllByOrderByNumberOfClicksDesc();
+
+    public Page<Property> getAllProperties(Pageable page, String sortBy){
+        List<Property> properties;
+
+        if(sortBy.equals("desc")){
+            properties = propertyRepository.findAllByOrderByPriceDesc();
+        } else if(sortBy.equals("asc")){
+            properties = propertyRepository.findAllByOrderByPriceAsc();
+        } else if(sortBy.equals("popuparity")){
+            properties = propertyRepository.findAllByOrderByNumberOfClicksDesc();
+        } else {
+            properties = propertyRepository.findAll();
         }
-        return propertyRepository.findAll();
+
+        int start = (int)page.getOffset();
+        int end = Math.min((start + page.getPageSize()), properties.size());
+        Page<Property> pagenatedList = new PageImpl<>(properties.subList(start, end), page, properties.size());
+        return pagenatedList;
+
     }
 
     /**
@@ -96,27 +101,35 @@ public class PropertyService {
      * @param sortBy either ascending or descending order
      * @return properties
      */
-    public List<Property> getSearchedProperties(String district, String address, String sortBy){
+    public Page<Property> getSearchedProperties(Pageable page, String district, String address, String sortBy){
+        List<Property> properties;
         if(district.equals("0")){ // district == 0 means, that the user did not select any district
             if(sortBy.equals("asc")){
-                return propertyRepository.findByAddressContainingOrderByPriceAsc(address);
+                properties = propertyRepository.findByAddressContainingOrderByPriceAsc(address);
             } else if(sortBy.equals("desc")){
-                return propertyRepository.findByAddressContainingOrderByPriceDesc(address);
+                properties = propertyRepository.findByAddressContainingOrderByPriceDesc(address);
+            } else if(sortBy.equals("popularity")){
+                properties = propertyRepository.findByAddressContainingOrderByNumberOfClicksDesc(address);
             } else {
-                return propertyRepository.findByAddressContaining(address);
+                properties = propertyRepository.findByAddressContaining(address);
             }
         } else if(sortBy.equals("asc")){
             String addressToUseInLikeOperation = "%" + address +"%";
-            return propertyRepository.findByDistrictAndAddressAsc(addressToUseInLikeOperation, district);
+            properties = propertyRepository.findByDistrictAndAddressAsc(addressToUseInLikeOperation, district);
         } else if(sortBy.equals("desc")){
             String addressToUseInLikeOperation = "%" + address +"%";
-            return propertyRepository.findByDistrictAndAddressDesc(addressToUseInLikeOperation, district);
+            properties = propertyRepository.findByDistrictAndAddressDesc(addressToUseInLikeOperation, district);
+        } else if(sortBy.equals("popularity")){
+            String addressToUseInLikeOperation = "%" + address +"%";
+            properties = propertyRepository.findByDistrictAndAddressPopularity(addressToUseInLikeOperation, district);
         } else {
             String addressToUseInLikeOperation = "%" + address +"%";
-            return propertyRepository.findByDistrictAndAddress(addressToUseInLikeOperation, district);
+            properties = propertyRepository.findByDistrictAndAddress(addressToUseInLikeOperation, district);
         }
-
-
+        int start = (int)page.getOffset();
+        int end = Math.min((start + page.getPageSize()), properties.size());
+        Page<Property> pagenatedList = new PageImpl<>(properties.subList(start, end), page, properties.size());
+        return pagenatedList;
     }
 
     /**
@@ -167,4 +180,5 @@ public class PropertyService {
     public void deletePropertyById(Long id) {
         propertyRepository.deleteById(id);
     }
+
 }
