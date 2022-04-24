@@ -1,8 +1,10 @@
 package com.realestate.springbootrealestate.service;
 
 import com.realestate.springbootrealestate.dto.request.PropertyRequest;
+import com.realestate.springbootrealestate.model.Click;
 import com.realestate.springbootrealestate.model.Property;
 import com.realestate.springbootrealestate.model.User;
+import com.realestate.springbootrealestate.repository.ClickRepository;
 import com.realestate.springbootrealestate.repository.PropertyRepository;
 import com.realestate.springbootrealestate.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -24,6 +26,7 @@ public class PropertyService {
 
     private final PropertyRepository propertyRepository;
     private final UserRepository userRepository;
+    private final ClickRepository clickRepository;
 
     /**
      * Finds the user, based on the id provided by the property item.
@@ -86,9 +89,16 @@ public class PropertyService {
     @Transactional
     public Property getPropertyById(Long id) {
         Property property = propertyRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Property not foudn with the id of: " + id));
+        /**Régi fajta amit majd törölni kell**/
         int clicks = property.getNumberOfClicks();
         clicks++;
         property.setNumberOfClicks(clicks);
+
+        Click click = new Click();
+        click.setProperty(property);
+        clickRepository.save(click);
+
+        //property.getClicks().add(new Click(property));
         propertyRepository.save(property);
         return property;
     }
