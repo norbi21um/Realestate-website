@@ -3,13 +3,20 @@ package com.realestate.springbootrealestate.controller;
 import com.realestate.springbootrealestate.dto.request.PropertyRequest;
 import com.realestate.springbootrealestate.dto.response.MessageResponse;
 import com.realestate.springbootrealestate.model.Property;
+import com.realestate.springbootrealestate.repository.PropertyRepository;
 import com.realestate.springbootrealestate.service.PropertyService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +31,7 @@ import java.util.Map;
 public class PropertyController {
 
     private final PropertyService propertyService;
+    private final PropertyRepository propertyRepository;
 
     /**
      * Returns the property with matching id
@@ -86,14 +94,10 @@ public class PropertyController {
         return response;
     }
 
-    /**
-     * Get method for returning all the properties
-     * @param sort either ascending or descending order
-     * @return Properties inserted in a map
-     */
+
     @RequestMapping("")
-    public Map<String, List<Property>> getAllProperties(@RequestParam(name = "sortBy") String sort) {
-        Map<String, List<Property>> response = new HashMap<String, List<Property>>();
+    public Page<Property> getAllProperties(Pageable page) {
+        /*Map<String, List<Property>> response = new HashMap<String, List<Property>>();
         if(sort.equals("asc")){
             response.put("properties", propertyService.getAllProperties(true, false, false));
         } else if(sort.equals("desc")){
@@ -102,8 +106,15 @@ public class PropertyController {
             response.put("properties", propertyService.getAllProperties(false, false, true));
         } else {
             response.put("properties", propertyService.getAllProperties(false, false, false));
-        }
-        return response;
+        }*/
+        return propertyService.getAllProperties(page);
+
+    }
+
+    @RequestMapping("/pagination")
+    public Page<Property> getAllValamiProperties(Pageable page) {
+
+        return propertyService.getProperties(page);
     }
 
     /**

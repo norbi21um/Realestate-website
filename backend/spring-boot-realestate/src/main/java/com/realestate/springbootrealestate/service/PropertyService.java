@@ -6,8 +6,10 @@ import com.realestate.springbootrealestate.model.User;
 import com.realestate.springbootrealestate.repository.PropertyRepository;
 import com.realestate.springbootrealestate.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
@@ -55,21 +57,14 @@ public class PropertyService {
         return null;
     }
 
-    /**
-     * Returns every property from the database ether in an ascending order or a descending order
-     * @param ascend Flag for ascending order
-     * @param descend Flag for descending order
-     * @return properties
-     */
-    public List<Property> getAllProperties(boolean ascend, boolean descend, boolean popularity){
-        if(ascend){
-            return propertyRepository.findAllByOrderByPriceAsc();
-        } else if(descend){
-            return propertyRepository.findAllByOrderByPriceDesc();
-        } else if(popularity){
-            return propertyRepository.findAllByOrderByNumberOfClicksDesc();
-        }
-        return propertyRepository.findAll();
+
+    public Page<Property> getAllProperties(Pageable page){
+        List<Property> properties = propertyRepository.findAll();
+        int start = (int)page.getOffset();
+        int end = Math.min((start + page.getPageSize()), properties.size());
+        Page<Property> page1 = new PageImpl<>(properties.subList(start, end), page, properties.size());
+        return page1;
+
     }
 
     /**
@@ -166,5 +161,17 @@ public class PropertyService {
      */
     public void deletePropertyById(Long id) {
         propertyRepository.deleteById(id);
+    }
+
+    public Page<Property> getProperties(Pageable page){
+        List<Property> properties = propertyRepository.findAll();
+        int start = (int)page.getOffset();
+        int end = Math.min((start + page.getPageSize()), properties.size());
+        Page<Property> page1 = new PageImpl<>(properties.subList(start, end), page, properties.size());
+
+        //List<Property> valamiList = propertyRepository.findAll();
+        //Page<Property> valamiPage = new PageImpl<Property>(valamiList, page, valamiList.size());
+
+        return page1;
     }
 }
