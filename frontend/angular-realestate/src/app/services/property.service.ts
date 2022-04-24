@@ -15,22 +15,33 @@ export class PropertyService {
   /**
    * Általános ingatlan listázás
    */
-  getPropertyList(sortBy: string): Observable<Property[]> {
-    const searchUrl = `${this.baseUrl}?sortBy=${sortBy}`;
-    return this.getProperties(searchUrl);
+  getPropertyListPaginate(
+    thePage: number,
+    thePageSize: number,
+    sortBy: string
+  ): Observable<GetResponse> {
+    const searchUrl = `${this.baseUrl}?size=${thePageSize}&page=${thePage}&sortBy=${sortBy}`;
+    return this.httpClient.get<GetResponse>(searchUrl);
   }
+
+  //Pagination tesztelése
+  //getPropertyList(sortBy: string): Observable<Property[]> {
+  //const searchUrl = `${this.baseUrl}?sortBy=${sortBy}`;
+  //return this.getProperties(searchUrl);
+  //}
 
   /**
    * Keresés
    */
   searchProperties(
+    thePage: number,
+    thePageSize: number,
     theKeyword: string,
     theDistrict: string,
     sortBy: string
-  ): Observable<Property[]> {
-    const searchUrl = `${this.baseUrl}/searchByKeyword?district=${theDistrict}&address=${theKeyword}&sortBy=${sortBy}`;
-
-    return this.getProperties(searchUrl);
+  ): Observable<GetResponse> {
+    const searchUrl = `${this.baseUrl}/searchByKeyword?size=${thePageSize}&page=${thePage}&district=${theDistrict}&address=${theKeyword}&sortBy=${sortBy}`;
+    return this.httpClient.get<GetResponse>(searchUrl);
   }
 
   /**
@@ -47,7 +58,7 @@ export class PropertyService {
    */
   private getProperties(url): Observable<Property[]> {
     return this.httpClient
-      .get<GetResponse>(url)
+      .get<GetResponseWithoutPaginationResponse>(url)
       .pipe(map((response) => response.properties));
   }
 
@@ -72,6 +83,14 @@ export class PropertyService {
   }
 }
 
-interface GetResponse {
+interface GetResponseWithoutPaginationResponse {
   properties: Property[];
+}
+
+interface GetResponse {
+  content: Property[];
+  totalElements: number;
+  totalPages: number;
+  size: number;
+  number: number;
 }

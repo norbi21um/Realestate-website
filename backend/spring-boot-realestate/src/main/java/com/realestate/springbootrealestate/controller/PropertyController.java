@@ -31,7 +31,6 @@ import java.util.Map;
 public class PropertyController {
 
     private final PropertyService propertyService;
-    private final PropertyRepository propertyRepository;
 
     /**
      * Returns the property with matching id
@@ -66,20 +65,13 @@ public class PropertyController {
     }
 
 
-    /**
-     * Returns the filtered list of properties the requested order
-     * @param district district
-     * @param address address keyword
-     * @param sort either ascending or descending order
-     * @return Properties inserted in a map
-     */
+
     @GetMapping(value = "/searchByKeyword")
-    public Map<String, List<Property>> findByAddress(@RequestParam(name = "district") String district,
+    public Page<Property>  findByAddress(Pageable page,
+                                                     @RequestParam(name = "district") String district,
                                                      @RequestParam(name = "address") String address,
                                                      @RequestParam(name = "sortBy") String sort) {
-        Map<String, List<Property>> response = new HashMap<String, List<Property>>();
-        response.put("properties", propertyService.getSearchedProperties(district, address, sort));
-        return response;
+        return propertyService.getSearchedProperties(page,district, address, sort);
     }
 
     /**
@@ -96,26 +88,11 @@ public class PropertyController {
 
 
     @RequestMapping("")
-    public Page<Property> getAllProperties(Pageable page) {
-        /*Map<String, List<Property>> response = new HashMap<String, List<Property>>();
-        if(sort.equals("asc")){
-            response.put("properties", propertyService.getAllProperties(true, false, false));
-        } else if(sort.equals("desc")){
-            response.put("properties", propertyService.getAllProperties(false, true, false));
-        } else if(sort.equals("popularity")){
-            response.put("properties", propertyService.getAllProperties(false, false, true));
-        } else {
-            response.put("properties", propertyService.getAllProperties(false, false, false));
-        }*/
-        return propertyService.getAllProperties(page);
+    public Page<Property> getAllProperties(Pageable page, String sortBy) {
+        return propertyService.getAllProperties(page, sortBy);
 
     }
 
-    @RequestMapping("/pagination")
-    public Page<Property> getAllValamiProperties(Pageable page) {
-
-        return propertyService.getProperties(page);
-    }
 
     /**
      * Post method for creating a new property

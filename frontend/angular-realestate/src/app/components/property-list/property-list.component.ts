@@ -14,13 +14,11 @@ export class PropertyListComponent implements OnInit {
   //Pagination
   thePageNumber: number = 1;
   thePageSize: number = 10;
-  theTotalElements: number = 60;
+  theTotalElements: number = 0;
 
   searchMode: boolean;
-
   districtMode: boolean;
-
-  properties: Property[];
+  properties: Property[] = [];
 
   constructor(
     private propertyService: PropertyService,
@@ -57,10 +55,14 @@ export class PropertyListComponent implements OnInit {
     this.searchMode = false;
 
     this.propertyService
-      .searchProperties(theKeyword, theDistrict, sortBy)
-      .subscribe((data) => {
-        this.properties = data;
-      });
+      .searchProperties(
+        this.thePageNumber - 1,
+        this.thePageSize,
+        theKeyword,
+        theDistrict,
+        sortBy
+      )
+      .subscribe(this.processResult());
   }
 
   handleOnlyDistrictSearchProperties(sortBy: string) {
@@ -69,16 +71,30 @@ export class PropertyListComponent implements OnInit {
     this.searchMode = false;
 
     this.propertyService
-      .searchProperties('', theDistrict, sortBy)
-      .subscribe((data) => {
-        this.properties = data;
-      });
+      .searchProperties(
+        this.thePageNumber - 1,
+        this.thePageSize,
+        '',
+        theDistrict,
+        sortBy
+      )
+      .subscribe(this.processResult());
   }
 
   handleListProperties(sortBy: string) {
-    this.propertyService.getPropertyList(sortBy).subscribe((data) => {
-      this.properties = data;
-    });
+    //Lehet újra kell majd settelni a page numebert 1-re ha nem működik a keresésnél
+    this.propertyService
+      .getPropertyListPaginate(this.thePageNumber - 1, this.thePageSize, sortBy)
+      .subscribe(this.processResult());
+  }
+
+  processResult() {
+    return (data) => {
+      this.properties = data.content;
+      this.thePageNumber = data.number + 1;
+      this.thePageSize = data.size;
+      this.theTotalElements = data.totalElements;
+    };
   }
 
   /**
@@ -109,5 +125,12 @@ export class PropertyListComponent implements OnInit {
       console.log('simaMode');
       this.handleListProperties(sortBy);
     }
+  }
+
+  updatePageSize(pageSize: string) {
+    let pageSizeNumnb = +pageSize;
+    this.thePageSize = pageSizeNumnb;
+    this.thePageNumber = 1;
+    this.listProperties();
   }
 }
