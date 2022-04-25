@@ -39,6 +39,8 @@ export class ProfileComponent implements OnInit {
       this.user.phoneNumber = data.phoneNumber;
       this.user.username = data.username;
       this.user.properties = data.proterties;
+      this.user.optimalTimeToPost = data.optimalTimeToPost;
+      this.user.monthlyReach = data.monthlyReach;
 
       //Max nézettség megtalálása
       for (var val of this.user.properties) {

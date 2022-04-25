@@ -8,6 +8,8 @@ export class User {
   email: string;
   phoneNumber: string;
   properties: Property[] = [];
+  optimalTimeToPost: number;
+  monthlyReach: number;
 }
 //Még kell egy ilyen:
 //private Set<Role> roles = new HashSet<>();

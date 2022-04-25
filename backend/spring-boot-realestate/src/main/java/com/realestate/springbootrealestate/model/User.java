@@ -55,6 +55,10 @@ public class User {
 
     private String lastName;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonIgnore
+    private Set<Click> clicks;
+
     public User() {
 
     }

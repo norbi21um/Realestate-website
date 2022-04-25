@@ -89,13 +89,19 @@ public class PropertyService {
     @Transactional
     public Property getPropertyById(Long id) {
         Property property = propertyRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Property not foudn with the id of: " + id));
-        /**Régi fajta amit majd törölni kell**/
+
+        /**Régi fajta amit majd törölni kell
+         * Majd kéne csinálni egy új property DTO-t,ahol a numberOfClicks
+         * A propertihez tartozó click sorok számától függene, akkor majd ki lehet ezt törölni
+         * TODO: Ezt megcsinálni
+         * **/
         int clicks = property.getNumberOfClicks();
         clicks++;
         property.setNumberOfClicks(clicks);
 
         Click click = new Click();
         click.setProperty(property);
+        click.setUser(property.getUser());
         clickRepository.save(click);
 
         //property.getClicks().add(new Click(property));

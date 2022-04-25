@@ -63,4 +63,7 @@ interface GetResponseUser {
   email: string;
   phoneNumber: string;
   proterties: Property[];
+  userResponse: number;
+  optimalTimeToPost: number;
+  monthlyReach: number;
 }

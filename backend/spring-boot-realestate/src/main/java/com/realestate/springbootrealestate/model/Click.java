@@ -26,9 +26,9 @@ public class Click {
     @JoinColumn(name = "property_id", nullable = false)
     private Property property;
 
-    public Click(Property property){
-        this.property = property;
-    }
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     public Click() {
 

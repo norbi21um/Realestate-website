@@ -1,9 +1,11 @@
 package com.realestate.springbootrealestate.service;
 
 import com.realestate.springbootrealestate.dto.response.UserResponse;
+import com.realestate.springbootrealestate.model.Click;
 import com.realestate.springbootrealestate.model.Property;
 import com.realestate.springbootrealestate.model.Role;
 import com.realestate.springbootrealestate.model.User;
+import com.realestate.springbootrealestate.repository.ClickRepository;
 import com.realestate.springbootrealestate.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.sql.Timestamp;
+import java.time.LocalTime;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * User service
@@ -25,6 +28,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
+    private final StatisticsService statisticsService;
 
 
     /**
@@ -56,9 +60,13 @@ public class UserService {
         userResponse.setPhoneNumber(user.getPhoneNumber());
         userResponse.setFirstName(user.getFirstName());
         userResponse.setLastName(user.getLastName());
+        userResponse.setOptimalTimeToPost(statisticsService.calculateOptimalHourToPost());
+        userResponse.setMonthlyReach(statisticsService.getUserReachThisMonth(user));
 
         return userResponse;
     }
+
+
 
     /**
      * Deletes the user with the given id from the database
