@@ -37,4 +37,8 @@ public class UserResponse {
     private String firstName;
 
     private String lastName;
+
+    private int optimalTimeToPost;
+
+    private int monthlyReach;
 }

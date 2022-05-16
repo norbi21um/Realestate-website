@@ -1,11 +1,14 @@
 package com.realestate.springbootrealestate.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Property JPA Entity
@@ -47,10 +50,15 @@ public class Property {
     @CreationTimestamp
     private Date dateCreated;
 
-    @Column(name = "number_of_clicks")
-    private Integer numberOfClicks;
-
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    /**EZT MAJD TÖRÖLNI**/
+    @Column(name = "number_of_clicks")
+    private Integer numberOfClicks;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "property")
+    @JsonIgnore
+    private Set<Click> clicks;
 }

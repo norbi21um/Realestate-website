@@ -15,6 +15,11 @@ import java.util.List;
 @Repository
 public interface PropertyRepository extends JpaRepository<Property, Long> {
 
+    /**
+     * Ez kell, majd a lekérdezéshez, hogy adott hírdetéshez mennyi clikkelés tartozik
+    https://tedblob.com/spring-data-jpa-count-group-by/
+    @Query(value = "SELECT c.customer_type, COUNT(c.customer_type) FROM Customer AS c GROUP BY c.customer_type")
+    List<Object[]> countCustomersByType();*/
 
     List<Property> findAllByOrderByNumberOfClicksDesc();
 
