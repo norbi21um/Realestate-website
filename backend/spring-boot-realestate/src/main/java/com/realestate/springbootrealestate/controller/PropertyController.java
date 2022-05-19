@@ -21,9 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Porperty controller
- */
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/properties")
@@ -32,23 +30,13 @@ public class PropertyController {
 
     private final PropertyService propertyService;
 
-    /**
-     * Returns the property with matching id
-     * @param id property id
-     * @return Property
-     */
+
     @GetMapping(value = "/{id}")
     public Property findById(@PathVariable("id") Long id) {
         return propertyService.getPropertyById(id);
     }
 
-    /**
-     * Deletes the requested property
-     * Requires authorization
-     * Accessible by USER, MODERATOR and ADMIN
-     * @param id property id
-     * @return message
-     */
+
     @DeleteMapping(value = "/delete")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<MessageResponse> deleteProperty(@RequestParam(name = "id") Long id) {
@@ -74,11 +62,7 @@ public class PropertyController {
         return propertyService.getSearchedProperties(page,district, address, sort);
     }
 
-    /**
-     * Get method that gives recommendations for the viewed property in the details page
-     * @param district disctict
-     * @return Properties inserted in a map
-     */
+
     @GetMapping(value = "/recommendation")
     public Map<String, List<Property>> getrecommendation(@RequestParam(name = "district") String district){
         Map<String, List<Property>> response = new HashMap<String, List<Property>>();
@@ -94,13 +78,6 @@ public class PropertyController {
     }
 
 
-    /**
-     * Post method for creating a new property
-     * Requires authorization
-     * Accessible by USER, MODERATOR and ADMIN
-     * @param propertyItem PropertyRequest, property dto
-     * @return Property
-     */
     @PostMapping("/createProperty")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
