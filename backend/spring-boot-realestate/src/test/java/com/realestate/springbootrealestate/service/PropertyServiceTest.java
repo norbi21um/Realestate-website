@@ -2,6 +2,7 @@ package com.realestate.springbootrealestate.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.realestate.springbootrealestate.dto.request.PropertyRequest;
+import com.realestate.springbootrealestate.dto.response.PropertyResponse;
 import com.realestate.springbootrealestate.model.Property;
 import com.realestate.springbootrealestate.repository.PropertyRepository;
 import org.junit.jupiter.api.BeforeAll;
@@ -131,7 +132,7 @@ public class PropertyServiceTest {
     @Test
     public void getPropertyByIdValidValueTest(){
         assertDoesNotThrow(() -> {propertyService.getPropertyById(1L);}, "Should not throw exception.");
-        Property property = propertyService.getPropertyById(1L);
+        PropertyResponse property = propertyService.getPropertyById(1L);
         assertNotNull(property);
         assertEquals(1L, property.getId());
     }
@@ -139,7 +140,7 @@ public class PropertyServiceTest {
     @Test
     public void getPropertyByIdClicksChangesTest(){
         assertDoesNotThrow(() -> {propertyService.getPropertyById(1L);}, "Should not throw exception.");
-        Property property = propertyService.getPropertyById(1L);
+        PropertyResponse property = propertyService.getPropertyById(1L);
         assertNotNull(property);
         assertEquals(6, property.getNumberOfClicks());
     }

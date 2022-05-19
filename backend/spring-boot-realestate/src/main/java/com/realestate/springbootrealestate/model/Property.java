@@ -62,4 +62,7 @@ public class Property {
     @JsonIgnore
     private Set<Click> clicks;
 
+    public void addClick(Click click){
+        clicks.add(click);
+    }
 }

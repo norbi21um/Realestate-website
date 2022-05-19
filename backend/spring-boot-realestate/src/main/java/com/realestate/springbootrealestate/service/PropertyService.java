@@ -1,6 +1,8 @@
 package com.realestate.springbootrealestate.service;
 
 import com.realestate.springbootrealestate.dto.request.PropertyRequest;
+import com.realestate.springbootrealestate.dto.response.PropertyResponse;
+import com.realestate.springbootrealestate.dto.response.UserResponse;
 import com.realestate.springbootrealestate.model.Click;
 import com.realestate.springbootrealestate.model.Property;
 import com.realestate.springbootrealestate.model.User;
@@ -47,7 +49,7 @@ public class PropertyService {
             property.setDescription(propertyItem.getDescription());
             property.setUser(user);
             property.setDistrict(propertyItem.getDistrict());
-            property.setNumberOfClicks(0);
+            //property.setNumberOfClicks(0);
 
             propertyRepository.save(property);
 
@@ -59,7 +61,7 @@ public class PropertyService {
     }
 
 
-    public Page<Property> getAllProperties(Pageable page, String sortBy){
+    public Page<PropertyResponse> getAllProperties(Pageable page, String sortBy){
         List<Property> properties;
 
         if(sortBy.equals("desc")){
@@ -72,15 +74,17 @@ public class PropertyService {
             properties = propertyRepository.findAll();
         }
 
+        List<PropertyResponse> propertyResponses = convertToPropertyListResponse(properties);
+
         int start = (int)page.getOffset();
-        int end = Math.min((start + page.getPageSize()), properties.size());
-        Page<Property> pagenatedList = new PageImpl<>(properties.subList(start, end), page, properties.size());
+        int end = Math.min((start + page.getPageSize()), propertyResponses.size());
+        Page<PropertyResponse> pagenatedList = new PageImpl<>(propertyResponses.subList(start, end), page, propertyResponses.size());
         return pagenatedList;
     }
 
 
     @Transactional
-    public Property getPropertyById(Long id) {
+    public PropertyResponse getPropertyById(Long id) {
         Property property = propertyRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Property not foudn with the id of: " + id));
 
         /**Régi fajta amit majd törölni kell
@@ -88,23 +92,25 @@ public class PropertyService {
          * A propertihez tartozó click sorok számától függene, akkor majd ki lehet ezt törölni
          * TODO: Ezt megcsinálni
          * **/
-        int clicks = property.getNumberOfClicks();
-        clicks++;
-        property.setNumberOfClicks(clicks);
+        //int clicks = property.getNumberOfClicks();
+        //clicks++;
+        //property.setNumberOfClicks(clicks);
 
         Click click = new Click();
         click.setProperty(property);
         click.setUser(property.getUser());
         clickRepository.save(click);
 
+        property.addClick(click);
         //property.getClicks().add(new Click(property));
         propertyRepository.save(property);
-        return property;
+
+        return convertToPropertyResponse(property);
     }
 
 
 
-    public Page<Property> getSearchedProperties(Pageable page, String district, String address, String sortBy){
+    public Page<PropertyResponse> getSearchedProperties(Pageable page, String district, String address, String sortBy){
         List<Property> properties;
         if(district.equals("0")){ // district == 0 means, that the user did not select any district
             if(sortBy.equals("asc")){
@@ -129,21 +135,25 @@ public class PropertyService {
             String addressToUseInLikeOperation = "%" + address +"%";
             properties = propertyRepository.findByDistrictAndAddress(addressToUseInLikeOperation, district);
         }
+
+        List<PropertyResponse> propertyResponses = convertToPropertyListResponse(properties);
+
         int start = (int)page.getOffset();
-        int end = Math.min((start + page.getPageSize()), properties.size());
-        Page<Property> pagenatedList = new PageImpl<>(properties.subList(start, end), page, properties.size());
+        int end = Math.min((start + page.getPageSize()), propertyResponses.size());
+        Page<PropertyResponse> pagenatedList = new PageImpl<>(propertyResponses.subList(start, end), page, propertyResponses.size());
         return pagenatedList;
     }
 
-    public List<Property> getRandomPropertiesByDistrict(String disctrict){
-        return getRandomElements(propertyRepository.findByDistrict(disctrict), 4);
+    public List<PropertyResponse> getRandomPropertiesByDistrict(String disctrict){
+        //log.info("RECOMENDATION SERVICE CALLED");
+        return convertToPropertyListResponse(
+                getRandomElements(propertyRepository.findByDistrict(disctrict), 4)
+        );
     }
 
 
     private List<Property> getRandomElements(List<Property> list, int totalItems) {
         Random rand = new Random();
-
-        //To avoid index out of bounds exception
         if(totalItems > list.size()){
             totalItems = list.size();
         }
@@ -169,4 +179,33 @@ public class PropertyService {
         propertyRepository.deleteById(id);
     }
 
+    public PropertyResponse convertToPropertyResponse(Property property){
+        if(property == null){
+            throw new EntityNotFoundException("Property not found");
+        }
+
+        PropertyResponse propertyResponse = new PropertyResponse();
+        propertyResponse.setId(property.getId());
+        propertyResponse.setAddress(property.getAddress());
+        propertyResponse.setDistrict(property.getDistrict());
+        propertyResponse.setPrice(property.getPrice());
+        propertyResponse.setArea(property.getArea());
+        propertyResponse.setImageUrl(property.getImageUrl());
+        propertyResponse.setDescription(property.getDescription());
+        propertyResponse.setDateCreated(property.getDateCreated());
+        propertyResponse.setUser(property.getUser());
+        //TODO: set-nek kell a méretét lekérdezni majd
+        propertyResponse.setNumberOfClicks(property.getNumberOfClicks());
+
+        return propertyResponse;
+    }
+
+    public List<PropertyResponse> convertToPropertyListResponse(List<Property> properties){
+        List<PropertyResponse> propertyResponses = new ArrayList<>();
+
+        for(Property p: properties){
+            propertyResponses.add(convertToPropertyResponse(p));
+        }
+        return propertyResponses;
+    }
 }
