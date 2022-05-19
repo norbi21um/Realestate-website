@@ -142,7 +142,9 @@ public class PropertyServiceTest {
         assertDoesNotThrow(() -> {propertyService.getPropertyById(1L);}, "Should not throw exception.");
         PropertyResponse property = propertyService.getPropertyById(1L);
         assertNotNull(property);
-        assertEquals(6, property.getNumberOfClicks());
+        assertEquals(3, property.getNumberOfClicks());
+        PropertyResponse property2 = propertyService.getPropertyById(1L);
+        assertEquals(4, property2.getNumberOfClicks());
     }
 
     @Test
