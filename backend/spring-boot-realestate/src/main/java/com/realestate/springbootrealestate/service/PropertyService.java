@@ -194,8 +194,7 @@ public class PropertyService {
         propertyResponse.setDescription(property.getDescription());
         propertyResponse.setDateCreated(property.getDateCreated());
         propertyResponse.setUser(property.getUser());
-        //TODO: set-nek kell a méretét lekérdezni majd
-        propertyResponse.setNumberOfClicks(property.getNumberOfClicks());
+        propertyResponse.setNumberOfClicks(property.getClicks().size());
 
         return propertyResponse;
     }

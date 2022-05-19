@@ -68,10 +68,8 @@ public class PropertyController {
 
     @GetMapping(value = "/recommendation")
     public Map<String, List<PropertyResponse>> getrecommendation(@RequestParam(name = "district") String district){
-        //log.info("RECOMENDATION API CALLED");
         Map<String, List<PropertyResponse>> response = new HashMap<String, List<PropertyResponse>>();
         response.put("properties", propertyService.getRandomPropertiesByDistrict(district));
-        //log.info("RECOMENDATION API RETURNED");
         return response;
     }
 

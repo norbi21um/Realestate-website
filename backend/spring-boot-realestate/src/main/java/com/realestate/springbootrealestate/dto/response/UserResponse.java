@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -28,7 +29,7 @@ public class UserResponse {
 
     private String email;
 
-    private Set<Property> proterties;
+    private List<PropertyResponse> proterties;
 
     private Set<Role> roles = new HashSet<>();
 
