@@ -61,4 +61,5 @@ public class Property {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "property")
     @JsonIgnore
     private Set<Click> clicks;
+
 }

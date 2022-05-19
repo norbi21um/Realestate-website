@@ -24,7 +24,6 @@ import java.util.PropertyResourceBundle;
 public class StatisticsService {
 
     private final ClickRepository clickRepository;
-    private final UserRepository userService;
 
     public int calculateOptimalHourToPost(){
         List<Click> clicks = clickRepository.findAll();

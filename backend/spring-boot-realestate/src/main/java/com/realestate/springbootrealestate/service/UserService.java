@@ -8,6 +8,7 @@ import com.realestate.springbootrealestate.model.User;
 import com.realestate.springbootrealestate.repository.ClickRepository;
 import com.realestate.springbootrealestate.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ import java.util.concurrent.TimeUnit;
  * User service
  */
 @Service
+@Slf4j
 @AllArgsConstructor
 public class UserService {
 
@@ -46,7 +48,7 @@ public class UserService {
      * @param id id
      * @return UserResponse
      */
-    private UserResponse convertToUserResponse(User user, Long id){
+    public UserResponse convertToUserResponse(User user, Long id){
         if(user == null){
             throw new EntityNotFoundException("Property not foudn with the id of: " + id);
         }
@@ -85,9 +87,10 @@ public class UserService {
             if(encoder.matches(oldPassword, user.getPassword())){
                 user.setPassword(encoder.encode(newPassword));
                 userRepository.save(user);
+                log.info("Successfully changed the password!");
             } else{
-                System.out.println("Nem egyezik a két password");
-                //Ha nem egyezik a régi pass word, majd valami exception-t dob
+                log.error("Passwords do not match");
+                throw new IllegalStateException("Passwords do not match");
             }
         }
         return user;
@@ -102,9 +105,10 @@ public class UserService {
             if(encoder.matches(password, user.getPassword())){
                 user.setUsername(newUsername);
                 userRepository.save(user);
+                log.info("Successfully changed the password!");
             } else{
-                System.out.println("Nem egyezik a két password");
-                //Ha nem egyezik a régi pass word, majd valami exception-t dob
+                log.error("Passwords do not match");
+                throw new IllegalStateException("Passwords do not match");
             }
         }
         return user;

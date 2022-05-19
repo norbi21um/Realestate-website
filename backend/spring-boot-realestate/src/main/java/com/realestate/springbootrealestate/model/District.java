@@ -1,5 +1,6 @@
 package com.realestate.springbootrealestate.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,6 +23,7 @@ public class District {
     @Column(name = "district")
     private String district;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "districtTest")
     private Set<Property> properties;
 

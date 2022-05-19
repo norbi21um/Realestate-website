@@ -8,6 +8,7 @@ import com.realestate.springbootrealestate.repository.ClickRepository;
 import com.realestate.springbootrealestate.repository.PropertyRepository;
 import com.realestate.springbootrealestate.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,7 @@ import java.util.Random;
  * Property service
  */
 @Service
+@Slf4j
 @AllArgsConstructor
 public class PropertyService {
 
@@ -28,17 +30,12 @@ public class PropertyService {
     private final UserRepository userRepository;
     private final ClickRepository clickRepository;
 
-    /**
-     * Finds the user, based on the id provided by the property item.
-     * If the user exists, the function creates a new property and saves it to the database
-     * if the user does not exist it return null.
-     * @param propertyItem Property tranfer data object
-     * @return null
-     */
+
     public Property createNewProperty(PropertyRequest propertyItem) {
         Long userId = propertyItem.getUserId();
 
         User user = userRepository.findById(userId).orElse(null);
+
 
         if(user != null){
             Property property = new Property();
@@ -54,8 +51,10 @@ public class PropertyService {
 
             propertyRepository.save(property);
 
+            return property;
         }
 
+        log.warn("No user found by the name of " + userId);
         return null;
     }
 
@@ -77,15 +76,9 @@ public class PropertyService {
         int end = Math.min((start + page.getPageSize()), properties.size());
         Page<Property> pagenatedList = new PageImpl<>(properties.subList(start, end), page, properties.size());
         return pagenatedList;
-
     }
 
-    /**
-     * Returns the property with matching id if it exits in the databse
-     * else it throws an exception
-     * @param id property id
-     * @return property
-     */
+
     @Transactional
     public Property getPropertyById(Long id) {
         Property property = propertyRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Property not foudn with the id of: " + id));
@@ -110,13 +103,7 @@ public class PropertyService {
     }
 
 
-    /**
-     * Retrieves properties base on their districts, addresses and sorts them.
-     * @param district district
-     * @param address Keyword in the address
-     * @param sortBy either ascending or descending order
-     * @return properties
-     */
+
     public Page<Property> getSearchedProperties(Pageable page, String district, String address, String sortBy){
         List<Property> properties;
         if(district.equals("0")){ // district == 0 means, that the user did not select any district
@@ -148,23 +135,11 @@ public class PropertyService {
         return pagenatedList;
     }
 
-    /**
-     * Creates suggestions based on the district of the viewed property
-     * Retrieves all the properties with the same district as the view property
-     * and selects 4 properties in a random order
-     * @param disctrict district
-     * @return properties
-     */
     public List<Property> getRandomPropertiesByDistrict(String disctrict){
         return getRandomElements(propertyRepository.findByDistrict(disctrict), 4);
     }
 
-    /**
-     * Randomly selects "totalItems" numeber of properties for a list of properties
-     * @param list list of properties
-     * @param totalItems how many properties to choose
-     * @return properties
-     */
+
     private List<Property> getRandomElements(List<Property> list, int totalItems) {
         Random rand = new Random();
 
@@ -189,10 +164,7 @@ public class PropertyService {
         return newList;
     }
 
-    /**
-     * Deletes the property with the given id from the database
-     * @param id property id
-     */
+
     public void deletePropertyById(Long id) {
         propertyRepository.deleteById(id);
     }
