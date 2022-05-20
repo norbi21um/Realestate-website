@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Property } from '../common/property';
 import { map } from 'rxjs/operators';
+import { District } from '../common/district';
 
 @Injectable({
   providedIn: 'root',
@@ -69,6 +70,15 @@ export class PropertyService {
     return this.httpClient.get<Property>(propertyUrl);
   }
 
+  getDistricts(): Observable<District[]> {
+    // URL építés a property id alapján
+    return this.httpClient
+      .get<GetResponseDistrict>(
+        `http://localhost:8080/api/districts?size=${30}`
+      )
+      .pipe(map((response) => response._embedded.districts));
+  }
+
   deletePropertyById(id: number) {
     const propertyUrl = `${this.baseUrl}/delete?id=${id}`;
     this.httpClient.delete(propertyUrl).subscribe({
@@ -85,6 +95,12 @@ export class PropertyService {
 
 interface GetResponseWithoutPaginationResponse {
   properties: Property[];
+}
+
+interface GetResponseDistrict {
+  _embedded: {
+    districts: District[];
+  };
 }
 
 interface GetResponse {

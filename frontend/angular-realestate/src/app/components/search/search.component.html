@@ -9,30 +9,10 @@
         aria-label="Default select example"
       >
         <option value="0" selected disabled>District</option>
-        <option value="0">All</option>
-        <option value="I">I.</option>
-        <option value="II">II.</option>
-        <option value="III">III.</option>
-        <option value="IV">IV.</option>
-        <option value="V">V.</option>
-        <option value="VI">VI.</option>
-        <option value="VII">VII.</option>
-        <option value="VIII">VIII.</option>
-        <option value="IX">IX.</option>
-        <option value="X">X.</option>
-        <option value="XI">XI.</option>
-        <option value="XII">XII.</option>
-        <option value="XIII">XIII.</option>
-        <option value="XIV">XIV.</option>
-        <option value="XV">XV.</option>
-        <option value="XVI">XVI.</option>
-        <option value="XVII">XVII.</option>
-        <option value="XVIII">XVIII.</option>
-        <option value="XIX">XIX.</option>
-        <option value="XX">XX.</option>
-        <option value="XXI">XXI.</option>
-        <option value="XXII">XXII.</option>
-        <option value="XXIII">XXIII.</option>
+
+        <option *ngFor="let valami of districts" [value]="valami.district">
+          {{ valami.district }}
+        </option>
       </select>
     </div>
     <!----------------------->
