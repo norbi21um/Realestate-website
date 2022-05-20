@@ -31,6 +31,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
     private final StatisticsService statisticsService;
+    private final PropertyService propertyService;
 
 
     /**
@@ -57,7 +58,11 @@ public class UserService {
         userResponse.setId(user.getId());
         userResponse.setUsername(user.getUsername());
         userResponse.setEmail(user.getEmail());
-        userResponse.setProterties(user.getProterties());
+
+        userResponse.setProterties(
+                propertyService.convertToPropertyListResponse(new ArrayList<>(user.getProterties()))
+        );
+
         userResponse.setRoles(user.getRoles());
         userResponse.setPhoneNumber(user.getPhoneNumber());
         userResponse.setFirstName(user.getFirstName());

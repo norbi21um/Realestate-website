@@ -128,7 +128,7 @@ public class PropertyContollerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.content", hasSize(4)))
-                .andExpect(jsonPath("$.content[0].numberOfClicks", is(5)));
+                .andExpect(jsonPath("$.content[0].numberOfClicks", is(0)));
     }
 
     //TODO: Number of clicks miatt error-t dob ha "null", de azt amúgy is ki kell majd törölni

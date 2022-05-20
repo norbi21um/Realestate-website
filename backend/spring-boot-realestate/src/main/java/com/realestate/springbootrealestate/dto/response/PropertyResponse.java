@@ -18,8 +18,6 @@ public class PropertyResponse {
 
     private String district;
 
-    private District districtTest;
-
     private BigDecimal price;
 
     private BigDecimal area;

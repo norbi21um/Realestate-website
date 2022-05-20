@@ -2,10 +2,12 @@ package com.realestate.springbootrealestate.controller;
 
 import com.realestate.springbootrealestate.dto.request.PropertyRequest;
 import com.realestate.springbootrealestate.dto.response.MessageResponse;
+import com.realestate.springbootrealestate.dto.response.PropertyResponse;
 import com.realestate.springbootrealestate.model.Property;
 import com.realestate.springbootrealestate.repository.PropertyRepository;
 import com.realestate.springbootrealestate.service.PropertyService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +26,7 @@ import java.util.Map;
 
 @RestController
 @AllArgsConstructor
+@Slf4j
 @RequestMapping("/api/properties")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class PropertyController {
@@ -32,7 +35,7 @@ public class PropertyController {
 
 
     @GetMapping(value = "/{id}")
-    public Property findById(@PathVariable("id") Long id) {
+    public PropertyResponse findById(@PathVariable("id") Long id) {
         return propertyService.getPropertyById(id);
     }
 
@@ -55,7 +58,7 @@ public class PropertyController {
 
 
     @GetMapping(value = "/searchByKeyword")
-    public Page<Property>  findByAddress(Pageable page,
+    public Page<PropertyResponse>  findByAddress(Pageable page,
                                                      @RequestParam(name = "district") String district,
                                                      @RequestParam(name = "address") String address,
                                                      @RequestParam(name = "sortBy") String sort) {
@@ -64,15 +67,15 @@ public class PropertyController {
 
 
     @GetMapping(value = "/recommendation")
-    public Map<String, List<Property>> getrecommendation(@RequestParam(name = "district") String district){
-        Map<String, List<Property>> response = new HashMap<String, List<Property>>();
+    public Map<String, List<PropertyResponse>> getrecommendation(@RequestParam(name = "district") String district){
+        Map<String, List<PropertyResponse>> response = new HashMap<String, List<PropertyResponse>>();
         response.put("properties", propertyService.getRandomPropertiesByDistrict(district));
         return response;
     }
 
 
     @RequestMapping("")
-    public Page<Property> getAllProperties(Pageable page, String sortBy) {
+    public Page<PropertyResponse> getAllProperties(Pageable page, String sortBy) {
         return propertyService.getAllProperties(page, sortBy);
 
     }
