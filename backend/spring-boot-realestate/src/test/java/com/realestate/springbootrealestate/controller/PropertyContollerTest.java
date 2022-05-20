@@ -131,7 +131,7 @@ public class PropertyContollerTest {
                 .andExpect(jsonPath("$.content[0].numberOfClicks", is(0)));
     }
 
-    //TODO: Number of clicks miatt error-t dob ha "null", de azt amúgy is ki kell majd törölni
+
     @Test
     public void PropertyInformationHttpRequestTest() throws Exception {
         Optional<Property> student = propertyRepository.findById(1L);
