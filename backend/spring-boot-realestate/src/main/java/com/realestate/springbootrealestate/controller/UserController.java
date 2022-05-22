@@ -37,15 +37,14 @@ public class UserController {
      * @return UserResponse
      */
     @GetMapping(value = "/user")
-    //@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public UserResponse findById() {
 
-        //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        //String currentPrincipalName = authentication.getName();
-        //UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.loadUserByUsername(currentPrincipalName);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.loadUserByUsername(currentPrincipalName);
 
-        //return userService.getUserById(userDetails.getId());
-        return userService.getUserById(1L);
+        return userService.getUserById(userDetails.getId());
     }
 
     /**
