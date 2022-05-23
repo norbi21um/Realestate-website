@@ -29,40 +29,20 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-    private final UserDetailsServiceImpl userDetailsService;
 
-    /**
-     * Recovers the user based on the security context,
-     * then returns a UserResponse object build from the user.
-     * @return UserResponse
-     */
     @GetMapping(value = "/user")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public UserResponse findById() {
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication.getName();
-        UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.loadUserByUsername(currentPrincipalName);
-
-        return userService.getUserById(userDetails.getId());
+        return userService.getUserById(userService.getUserIdFromJWT());
     }
 
-    /**
-     * Recovers the user based on the security context,
-     * then deletes the user and returns a message in the ResponseEnity body
-     * @return ResponseEntity with MessageResponse
-     */
+
     @DeleteMapping(value = "/deleteUser")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<MessageResponse> deleteUser() {
         String message = "";
         try {
-
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            String currentPrincipalName = authentication.getName();
-            UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.loadUserByUsername(currentPrincipalName);
-
-            userService.deleteUserById(userDetails.getId());
+            userService.deleteUserById(userService.getUserIdFromJWT());
 
             message = "Deletion complited";
             return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(message));
@@ -72,39 +52,19 @@ public class UserController {
         }
     }
 
-    //http://localhost:8080/api/updateUser?oldaPassword=password1&newPassword=password
-    //Ezzel az URL-el működik
     @PutMapping(value = "/updateUserPassword")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public User updateUserPassword(@RequestParam(name = "oldaPassword") String oldaPassword,
                                    @RequestParam(name = "newPassword") String newPassword){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication.getName();
-        UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.loadUserByUsername(currentPrincipalName);
-
-        System.out.println(oldaPassword);
-        System.out.println(newPassword);
-
-        return userService.updateUserPassword(userDetails.getId(), oldaPassword, newPassword);
-
+        return userService.updateUserPassword(userService.getUserIdFromJWT(), oldaPassword, newPassword);
     }
 
-    //http://localhost:8080/api/updateUsename?newUsername=valami&password=password
-    //Ezzel az URL-el működik
-    //Miután megváltozik a username, már nem jó a mostani JWT token, így újra be kell jelentkezni
+
     @PutMapping(value = "/updateUsername")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public User updateUsename(@RequestParam(name = "newUsername") String newUsername,
                               @RequestParam(name = "password") String password){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication.getName();
-        UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.loadUserByUsername(currentPrincipalName);
-
-        System.out.println(newUsername);
-        System.out.println(password);
-
-        return userService.updateUsername(userDetails.getId(), newUsername, password);
+        return userService.updateUsername(userService.getUserIdFromJWT(), newUsername, password);
 
     }
-
 }

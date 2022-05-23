@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * Implementation of the UserDetails interface
  */
 @Getter
-public class UserDetailsImpl implements UserDetails {
+public class    UserDetailsImpl implements UserDetails {
 
     private static final long serialVersionUID = 1L;
 

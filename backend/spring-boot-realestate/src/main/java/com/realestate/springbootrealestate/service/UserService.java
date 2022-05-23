@@ -10,6 +10,8 @@ import com.realestate.springbootrealestate.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +34,7 @@ public class UserService {
     private final PasswordEncoder encoder;
     private final StatisticsService statisticsService;
     private final PropertyService propertyService;
+    private final UserDetailsServiceImpl userDetailsService;
 
 
     /**
@@ -117,5 +120,13 @@ public class UserService {
             }
         }
         return user;
+    }
+
+    public Long getUserIdFromJWT(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.loadUserByUsername(currentPrincipalName);
+
+        return userDetails.getId();
     }
 }
